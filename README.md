@@ -1,13 +1,36 @@
 # Unified Superpowers Toolkit
 
-🚀 **100 AI skills** for security testing, robotics engineering, and software development — all in one comprehensive toolkit.
+**100 battle-tested AI skills for the complete development lifecycle — from brainstorming to bug bounty to robot deployment.**
 
-## 🎯 What This Is
+## 🎯 The Problem We Solve
 
-A unified skill collection that combines:
-- **Security Testing** — Bug bounty methodology, vulnerability hunting, penetration testing (from [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter))
-- **Robotics Engineering** — ROS, sensor fusion, localization, embedded systems (from [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers))
-- **Software Development** — Debugging, testing, code review, project planning
+You need AI assistance across the entire development lifecycle, but the tools are fragmented:
+- **Security researchers** struggle with scattered vulnerability databases and inconsistent methodologies
+- **Robotics engineers** face complex sensor fusion and localization challenges with no systematic approach
+- **Developers** waste time context-switching between debugging, testing, and planning tools
+
+**Unified Superpowers solves this by bringing together 100 specialized skills from three expert sources into one cohesive toolkit.**
+
+## 💡 What You Get
+
+A unified skill collection that covers the complete development lifecycle:
+- **🔒 Security Testing** — Bug bounty methodology, vulnerability hunting, penetration testing (52 skills from [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter))
+- **🤖 Robotics Engineering** — ROS, sensor fusion, localization, embedded systems (18 skills from [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers))
+- **💻 Software Development** — Debugging, testing, code review, project planning (15 language skills + 15 core process skills)
+
+## 🏗️ Why This Matters
+
+### The Fragmentation Problem
+Modern development requires expertise across multiple domains, but AI assistance tools are siloed. You need one tool for debugging, another for security testing, and yet another for robotics. This fragmentation wastes time and creates inconsistent workflows.
+
+### The Unified Solution
+**Unified Superpowers** brings together skills from three specialized repositories:
+- **obra/superpowers** provides the foundational core process skills (15) that govern how you approach any development task
+- **Claude-BugHunter** contributes battle-tested security skills (52) developed from real authorized engagements with 681 disclosed reports
+- **robotics-superpowers** adds specialized robotics and language expertise (33) for complex engineering challenges
+
+### The Impact
+With 100 skills auto-deploying to 7 AI coding platforms, you get comprehensive assistance that adapts to your workflow — not the other way around. Skills auto-trigger based on natural language queries, providing expert guidance exactly when you need it.
 
 ## 📊 Quick Stats
 
@@ -110,6 +133,24 @@ unified-superpowers/
 - **`brainstorming`** — Design and specification creation
 - **`python-expert`** — Python debugging, optimization, best practices
 - **`cpp-expert`** — C++ review, safety, performance
+
+## 🎯 Who This Is For
+
+### Primary Audiences
+- **Security Researchers** conducting bug bounty programs, penetration testing, and vulnerability research
+- **Robotics Engineers** working on autonomous systems, sensor fusion, and embedded systems
+- **Software Developers** building production applications across multiple languages
+
+### Secondary Audiences
+- **DevOps Engineers** managing CI/CD pipelines and infrastructure
+- **Embedded Systems Developers** working on hardware-software integration
+- **Data Engineers** building data pipelines and processing systems
+
+### Use Cases
+- **Bug Bounty Programs**: Systematic vulnerability hunting with 28 hunt modules covering XSS, SQLi, RCE, and more
+- **Robotics Projects**: ROS development, GPS/INS sensor fusion, SLAM implementation, embedded systems
+- **Software Development**: Multi-language debugging, TDD, code review, architecture design
+- **DevOps Automation**: CI/CD pipeline design, Linux administration, software architecture
 
 ## 💡 Use Case Examples
 
@@ -228,14 +269,18 @@ For a complete listing of all 100 skills organized by domain, see [SKILL_CATALOG
 
 ## 🔄 Updates & Maintenance
 
-This is a local integration. To update from upstream repositories:
+This is a curated integration from three upstream repositories. To update from sources:
 
 ```bash
-# Update from obra/superpowers
+# Update from obra/superpowers (core process skills)
 cd /path/to/superpowers
 git pull
 
-# Update from robotics-superpowers
+# Update from Claude-BugHunter (security skills)
+cd /path/to/Claude-BugHunter
+git pull
+
+# Update from robotics-superpowers (robotics & language skills)
 cd /path/to/robotics-superpowers
 git pull
 
@@ -243,57 +288,100 @@ git pull
 # Review and merge relevant skill updates
 ```
 
+**Update Frequency**: We recommend checking for updates monthly. Security skills from Claude-BugHunter are updated based on new vulnerability research. Core process skills from obra/superpowers are updated based on methodology improvements. Robotics skills are updated based on new engineering patterns.
+
+## ✨ What Makes This Different
+
+### Comprehensive Coverage
+**100 skills from three expert sources** vs fragmented single-domain tools. You get security testing, robotics engineering, software development, and core process skills — all working together seamlessly.
+
+### Battle-Tested Quality
+- **Security skills** developed from real authorized engagements (681 disclosed reports)
+- **Core process skills** refined through production use across thousands of development sessions
+- **Robotics skills** validated on real autonomous systems and embedded platforms
+
+### Three Expert Sources, One Unified Toolkit
+
+**obra/superpowers** — The Foundation
+- **15 core process skills** that govern how you approach any development task
+- Skills: brainstorming, systematic-debugging, test-driven-development, verification-before-completion, writing-plans, and more
+- Provides the methodology framework that makes all other skills more effective
+
+**Claude-BugHunter** — The Security Arsenal
+- **52 security skills** battle-tested from real authorized engagements
+- Skills: bug-bounty, hunt-xss, hunt-sqli, security-pentester, offensive-osint, and more
+- Developed from 2 authorized engagements with 681 disclosed vulnerability reports
+
+**robotics-superpowers** — The Engineering Expertise
+- **33 robotics and language skills** for complex engineering challenges
+- Skills: ros-robotics-expert, gps-ins-localization-expert, python-expert, devops-engineer, and more
+- Specialized expertise for ROS, sensor fusion, localization, and multi-language development
+
+### Seamless Integration
+- **Auto-deployment** to 7 AI coding platforms (.claude, .opencode, .devin, .codeium, .codex, .copilot, .cursor)
+- **Cross-platform installers** for Linux, macOS, and Windows
+- **Natural language triggers** — skills activate based on what you're actually asking
+- **Unified workflow** — no context switching between different AI assistance tools
+
 ## 🤝 Contributing
 
-This toolkit is a local integration combining skills from two major repositories:
+This toolkit is a curated integration combining skills from three expert repositories:
 
 ### Source Repositories
+
+**Core Process Skills (15 skills)**
+- Source: [obra/superpowers](https://github.com/obra/superpowers)
+- Author: [obra](https://github.com/obra)
+- Skills: brainstorming, systematic-debugging, test-driven-development, verification-before-completion, writing-plans, subagent-driven-development, executing-plans, finishing-a-development-branch, requesting-code-review, receiving-code-review, using-git-worktrees, using-superpowers, writing-skills, token-optimizer
+- Purpose: Foundational methodology and process framework for all development work
+- License: See individual skill directories
 
 **Security Skills (52 skills)**
 - Source: [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter)
 - Author: [elementalsouls](https://github.com/elementalsouls)
-- Skills: Bug bounty methodology, vulnerability hunting, penetration testing, OSINT, red team operations
+- Skills: Bug bounty methodology, vulnerability hunting (28 hunt modules), penetration testing, OSINT, red team operations
+- Purpose: Comprehensive security testing with battle-tested techniques
 - License: See individual skill directories
 
-**Robotics Skills (18 skills)**
+**Robotics & Language Skills (33 skills)**
 - Source: [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers)
 - Author: [RedEarth-Robotics](https://github.com/RedEarth-Robotics)
-- Skills: ROS, GPS/INS fusion, localization, embedded systems, sensor fusion
+- Skills: ROS development, GPS/INS fusion, SLAM, embedded systems, Python, C++, Rust, JavaScript, MATLAB, Go, Java, DevOps, Linux, Software Architecture
+- Purpose: Specialized engineering expertise for robotics and multi-language development
 - License: See individual skill directories
 
-**Core Process Skills (15 skills)**
-- Source: robotics-superpowers
-- Skills: Debugging, testing, planning, code review, git workflows, parallel agents
-
-**Language Skills (15 skills)**
-- Source: Both repositories
-- Skills: Python, C++, Rust, JavaScript, MATLAB, Go, Java, DevOps, Linux, Software Architecture
-
-### Integration Notes
+### Integration Approach
 
 This unified toolkit:
-- Merges security-pentester skill from both sources (methodology + payloads)
-- Maintains original skill structure and content
-- Preserves all original licenses
-- Provides cross-platform installation scripts
-- Auto-deploys to 7 AI coding platforms
+- **Preserves** original skill structure and content from all three sources
+- **Merges** security-pentester skill (methodology from robotics-superpowers + payloads from Claude-BugHunter's security-arsenal)
+- **Maintains** all original licenses — each skill retains its source repository's license
+- **Provides** cross-platform installation scripts for easy deployment
+- **Auto-deploys** to 7 AI coding platforms for seamless workflow integration
+- **Regularly syncs** with upstream repositories to maintain currency
 
 For contributions to the original repositories:
-- **obra/superpowers**: [Submit PR](https://github.com/obra/superpowers)
-- **robotics-superpowers**: [Submit PR](https://github.com/RedEarth-Robotics/robotics-superpowers)
+- **obra/superpowers**: [Submit PR](https://github.com/obra/superpowers) — Core process skills and methodology
+- **Claude-BugHunter**: [Submit PR](https://github.com/elementalsouls/Claude-BugHunter) — Security testing skills
+- **robotics-superpowers**: [Submit PR](https://github.com/RedEarth-Robotics/robotics-superpowers) — Robotics and language skills
 
 ## 📄 License
 
-See individual skill directories for their original licenses. This integration maintains the licenses of the source repositories.
+See individual skill directories for their original licenses. This integration maintains the licenses of the source repositories. Each skill retains the license of its original source repository.
 
 ## 🔗 Links
 
 - **GitHub**: https://github.com/RedEarth-Robotics/unified-superpowers
 - **Issues**: Report issues via GitHub Issues
+- **Documentation**:
+  - [SKILL_CATALOG.md](SKILL_CATALOG.md) — Complete skill listing by domain
+  - [docs/ENGAGEMENTS.md](docs/ENGAGEMENTS.md) — Authorized engagement records for security skills
+  - [INSTALLATION.md](INSTALLATION.md) — Detailed installation instructions
 - **Original Sources**:
+  - [obra/superpowers](https://github.com/obra/superpowers): Core process skills (15 skills)
   - [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter): Security testing skills (51 skills)
-  - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers): Robotics engineering skills (47 skills)
+  - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers): Robotics & language skills (33 skills)
 
 ---
 
-**Built for security researchers, robotics engineers, and developers who want comprehensive AI assistance across the entire development lifecycle.**
+**Built for security researchers, robotics engineers, and developers who demand comprehensive, battle-tested AI assistance across the entire development lifecycle.**
