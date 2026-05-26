@@ -184,7 +184,8 @@ function Install-Toolkit {
             "$env:USERPROFILE\.devin",
             "$env:USERPROFILE\.codeium",
             "$env:USERPROFILE\.codex",
-            "$env:USERPROFILE\.copilot"
+            "$env:USERPROFILE\.copilot",
+            "$env:USERPROFILE\.cursor"
         )
         
         foreach ($platformDir in $platformDirs) {

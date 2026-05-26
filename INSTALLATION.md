@@ -80,6 +80,7 @@ By default, the installer automatically copies skills to platform-specific direc
 - `~/.codeium/skills/` - Codeium skills
 - `~/.codex/skills/` - Codex skills
 - `~/.copilot/skills/` - GitHub Copilot skills
+- `~/.cursor/skills/` - Cursor skills
 
 ### Windows
 - `%USERPROFILE%\.claude\skills\` - Claude Code skills
@@ -88,6 +89,7 @@ By default, the installer automatically copies skills to platform-specific direc
 - `%USERPROFILE%\.codeium\skills\` - Codeium skills
 - `%USERPROFILE%\.codex\skills\` - Codex skills
 - `%USERPROFILE%\.copilot\skills\` - GitHub Copilot skills
+- `%USERPROFILE%\.cursor\skills\` - Cursor skills
 
 ### Disabling Platform Installation
 

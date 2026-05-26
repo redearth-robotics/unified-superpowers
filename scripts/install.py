@@ -154,6 +154,7 @@ class Installer:
             Path.home() / ".codeium",
             Path.home() / ".codex",
             Path.home() / ".copilot",
+            Path.home() / ".cursor",
         ]
 
         for platform_dir in platform_dirs:

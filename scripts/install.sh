@@ -199,6 +199,7 @@ install_toolkit() {
             "$HOME/.codeium"
             "$HOME/.codex"
             "$HOME/.copilot"
+            "$HOME/.cursor"
         )
         
         for platform_dir in "${PLATFORM_DIRS[@]}"; do
