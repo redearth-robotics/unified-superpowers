@@ -5,8 +5,8 @@
 ## 🎯 What This Is
 
 A unified skill collection that combines:
-- **Security Testing** — Bug bounty methodology, vulnerability hunting, penetration testing
-- **Robotics Engineering** — ROS, sensor fusion, localization, embedded systems
+- **Security Testing** — Bug bounty methodology, vulnerability hunting, penetration testing (from [obra/superpowers](https://github.com/obra/superpowers))
+- **Robotics Engineering** — ROS, sensor fusion, localization, embedded systems (from [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers))
 - **Software Development** — Debugging, testing, code review, project planning
 
 ## 📊 Quick Stats
@@ -326,8 +326,8 @@ Example:
 This is a local integration. To update from upstream repositories:
 
 ```bash
-# Update from Claude-BugHunter
-cd /path/to/Claude-BugHunter
+# Update from obra/superpowers
+cd /path/to/superpowers
 git pull
 
 # Update from robotics-superpowers
@@ -340,9 +340,42 @@ git pull
 
 ## 🤝 Contributing
 
-This toolkit is a local integration. For contributions to the original skill repositories:
-- **Claude-BugHunter**: [Original Repository](https://github.com/obra/duperpowers)
-- **robotics-superpowers**: [Original Repository](https://github.com/RedEarth-Robotics/robotics-superpowers)
+This toolkit is a local integration combining skills from two major repositories:
+
+### Source Repositories
+
+**Security Skills (52 skills)**
+- Source: [obra/superpowers](https://github.com/obra/superpowers)
+- Author: [obra](https://github.com/obra)
+- Skills: Bug bounty methodology, vulnerability hunting, penetration testing, OSINT, red team operations
+- License: See individual skill directories
+
+**Robotics Skills (18 skills)**
+- Source: [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers)
+- Author: [RedEarth-Robotics](https://github.com/RedEarth-Robotics)
+- Skills: ROS, GPS/INS fusion, localization, embedded systems, sensor fusion
+- License: See individual skill directories
+
+**Core Process Skills (14 skills)**
+- Source: robotics-superpowers
+- Skills: Debugging, testing, planning, code review, git workflows
+
+**Language Skills (11 skills)**
+- Source: Both repositories
+- Skills: Python, C++, Rust, JavaScript, MATLAB, Go, Java
+
+### Integration Notes
+
+This unified toolkit:
+- Merges security-pentester skill from both sources (methodology + payloads)
+- Maintains original skill structure and content
+- Preserves all original licenses
+- Provides cross-platform installation scripts
+- Auto-deploys to 7 AI coding platforms
+
+For contributions to the original repositories:
+- **obra/superpowers**: [Submit PR](https://github.com/obra/superpowers)
+- **robotics-superpowers**: [Submit PR](https://github.com/RedEarth-Robotics/robotics-superpowers)
 
 ## 📄 License
 
@@ -353,8 +386,8 @@ See individual skill directories for their original licenses. This integration m
 - **GitHub**: https://github.com/RedEarth-Robotics/unified-superpowers
 - **Issues**: Report issues via GitHub Issues
 - **Original Sources**:
-  - Claude-BugHunter: Security testing skills
-  - robotics-superpowers: Robotics engineering skills
+  - [obra/superpowers](https://github.com/obra/superpowers): Security testing skills (52 skills)
+  - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers): Robotics engineering skills (18 skills)
 
 ---
 
