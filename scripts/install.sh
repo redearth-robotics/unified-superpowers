@@ -149,7 +149,7 @@ install_toolkit() {
     # Check if directory already exists
     if [ -d "$INSTALL_DIR" ]; then
         log_warning "Directory '$INSTALL_DIR' already exists"
-        if prompt_yes_no "Do you want to update the existing installation?" "n"; then
+        if prompt_yes_no "Do you want to update the existing installation?" "y"; then
             log_info "Updating existing installation..."
             cd "$INSTALL_DIR"
             git pull origin master
@@ -169,10 +169,10 @@ install_toolkit() {
         fi
         
         log_success "Repository cloned successfully"
+        cd "$INSTALL_DIR"
     fi
 
     # Verify installation
-    cd "$INSTALL_DIR"
     SKILL_COUNT=$(find skills -name "SKILL.md" 2>/dev/null | wc -l)
     
     if [ "$SKILL_COUNT" -eq 95 ]; then

@@ -93,7 +93,7 @@ class Installer:
         """Clone or update the repository"""
         if self.install_dir.exists():
             self.log_warning(f"Directory '{self.install_dir}' already exists")
-            if self.prompt_yes_no("Do you want to update the existing installation?", False):
+            if self.prompt_yes_no("Do you want to update the existing installation?", True):
                 self.log_info("Updating existing installation...")
                 try:
                     subprocess.run(

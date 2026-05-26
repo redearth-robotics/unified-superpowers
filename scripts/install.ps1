@@ -123,13 +123,12 @@ function Install-Toolkit {
     # Check if directory exists
     if (Test-Path $Directory) {
         Write-Warning "Directory '$Directory' already exists"
-        if (Test-YesNo "Do you want to update the existing installation?" $false) {
+        if (Test-YesNo "Do you want to update the existing installation?" $true) {
             Write-Info "Updating existing installation..."
             Push-Location $Directory
             try {
                 git pull origin master
                 Write-Success "Installation updated successfully"
-                return $true
             }
             catch {
                 Write-Error "Failed to update repository: $_"
