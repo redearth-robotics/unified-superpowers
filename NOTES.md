@@ -1,37 +1,14 @@
-## 2025-05-26 20:50 — Sync with robotics-superpowers updates
+## 2025-05-26 22:15 — Add super description to README.md
 
-Updated unified-superpowers with latest changes from robotics-superpowers (47 skills → 100 total).
-
-Added 5 new skills: dispatching-parallel-agents, data-pipeline-architect, devops-engineer, linux-ubuntu-expert, software-architect.
-
-Enhanced all existing skills with standardized Red Flags tables and improvements.
-
-Updated skill counts: Core 14→15, Languages 11→15, Total 95→100.
-
-Open follow-ups: none
-
-## 2025-05-26 21:30 — Sync security skills with Claude-BugHunter v2.0
-
-Verified security skills already at latest version (MD5 checksum comparison).
-
-Added ENGAGEMENTS.md documentation from Claude-BugHunter (authorized engagements context).
-
-Corrected source attribution from obra/superpowers to Claude-BugHunter (elementalsouls fork).
-
-Updated config files with GitHub URLs and sync timestamp.
-
-Total security skills: 52 (51 from Claude-BugHunter + 1 merged security-pentester).
-
-Open follow-ups: none
-
-## 2025-05-26 21:45 — Complete source sync verification
-
-Verified unified-superpowers is fully synced with both source repositories:
-- robotics-superpowers: 47 skills synced (100 total skills)
-- Claude-BugHunter: 51 security skills verified at v2.0 (52 total with merged skill)
-
-Corrected all source attributions in documentation.
-
-Total skills: 100 (15 core + 15 languages + 18 robotics + 52 security).
+Comprehensive rewrite of README.md with narrative, technical details, and benefits:
+- Enhanced hero section with narrative hook and value proposition
+- New 'Why This Matters' section explaining the fragmentation problem
+- Correct attribution of core process skills to obra/superpowers (15 skills)
+- Detailed source repository highlights for all three sources with proper credit
+- New 'Who This Is For' section with primary/secondary audiences
+- Enhanced 'What Makes This Different' section with comprehensive comparison
+- Updated 'Contributing' section with detailed source repository information
+- Updated 'Updates & Maintenance' section with all three sources
+- Enhanced 'Links' section with documentation references
 
 Open follow-ups: none
