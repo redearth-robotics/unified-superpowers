@@ -5,7 +5,7 @@
 ## 🎯 What This Is
 
 A unified skill collection that combines:
-- **Security Testing** — Bug bounty methodology, vulnerability hunting, penetration testing (from [obra/superpowers](https://github.com/obra/superpowers))
+- **Security Testing** — Bug bounty methodology, vulnerability hunting, penetration testing (from [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter))
 - **Robotics Engineering** — ROS, sensor fusion, localization, embedded systems (from [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers))
 - **Software Development** — Debugging, testing, code review, project planning
 
@@ -220,6 +220,12 @@ Example:
 
 For a complete listing of all 100 skills organized by domain, see [SKILL_CATALOG.md](SKILL_CATALOG.md).
 
+## 📖 Documentation
+
+- [SKILL_CATALOG.md](SKILL_CATALOG.md) — Complete skill listing by domain
+- [docs/ENGAGEMENTS.md](docs/ENGAGEMENTS.md) — Authorized engagement records for security skills
+- [INSTALLATION.md](INSTALLATION.md) — Detailed installation instructions
+
 ## 🔄 Updates & Maintenance
 
 This is a local integration. To update from upstream repositories:
@@ -244,8 +250,8 @@ This toolkit is a local integration combining skills from two major repositories
 ### Source Repositories
 
 **Security Skills (52 skills)**
-- Source: [obra/superpowers](https://github.com/obra/superpowers)
-- Author: [obra](https://github.com/obra)
+- Source: [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter)
+- Author: [elementalsouls](https://github.com/elementalsouls)
 - Skills: Bug bounty methodology, vulnerability hunting, penetration testing, OSINT, red team operations
 - License: See individual skill directories
 
@@ -285,7 +291,7 @@ See individual skill directories for their original licenses. This integration m
 - **GitHub**: https://github.com/RedEarth-Robotics/unified-superpowers
 - **Issues**: Report issues via GitHub Issues
 - **Original Sources**:
-  - [obra/superpowers](https://github.com/obra/superpowers): Security testing skills (52 skills)
+  - [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter): Security testing skills (51 skills)
   - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers): Robotics engineering skills (47 skills)
 
 ---

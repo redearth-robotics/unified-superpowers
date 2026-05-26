@@ -128,15 +128,16 @@
   "sources": [
     {
       "name": "Claude-BugHunter",
-      "path": "/home/frederichtran199/Code/tools/Claude-BugHunter",
+      "url": "https://github.com/elementalsouls/Claude-BugHunter",
       "skills_contributed": 51
     },
     {
       "name": "robotics-superpowers",
-      "path": "/home/frederichtran199/Code/tools/robotics-superpowers",
+      "url": "https://github.com/RedEarth-Robotics/robotics-superpowers",
       "skills_contributed": 47
     }
   ],
   "merged_skills": ["security-pentester"],
-  "created_at": "2026-05-26"
+  "created_at": "2026-05-26",
+  "updated_at": "2026-05-26"
 }
