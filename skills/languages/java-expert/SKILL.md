@@ -1,7 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with Java code, JVM performance, Spring Boot, concurrency, or enterprise systems for robotics.\n\nTrigger phrases include:\n- 'review my Java code'\n- 'Java performance'\n- 'Spring Boot help'\n- 'Java for robotics'\n- 'JVM tuning'\n- 'Java concurrency bug'\n- 'Spring microservice'\n- 'enterprise Java robotics'\n\nExamples:\n- User pastes Java code and says 'can you review this for me?' → invoke this agent to analyze for concurrency bugs, resource leaks, and Spring misconfigurations\n- User says 'my Java service has memory issues under load' → invoke this agent to analyze GC logs, heap dumps, and tuning options\n- User asks 'how do I build a Spring Boot backend for robot fleet management?' → invoke this agent to recommend architecture, patterns, and libraries\n- After implementing a robotics data pipeline in Java, user says 'optimize this for throughput' → invoke this agent to profile, identify bottlenecks, and recommend JVM and code optimizations"
 name: java-expert
-tools: ['shell', 'read', 'search', 'edit', 'task', 'skill', 'web_search', 'web_fetch', 'ask_user']
+description: "Use when the user asks for help with Java code, JVM performance, Spring Boot, concurrency, or enterprise systems for robotics. Trigger phrases: 'review my Java code', 'Java performance', 'Spring Boot help', 'Java for robotics', 'JVM tuning', 'Java concurrency bug', 'Spring microservice', 'enterprise Java robotics'."
 ---
 
 # java-expert instructions
@@ -61,10 +60,10 @@ Methodology by task type:
 4. Identify allocation hot paths and suggest object pooling, primitive collections, or struct-like patterns
 5. Recommend profiling tools: JFR, async-profiler, VisualVM, Eclipse MAT
 
-Red Flags table:
+## Red Flags
 
-| Red Flag | Why It Matters | What To Do |
-|----------|---------------|------------|
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
 | `synchronized` on methods or `this` | Coarse locking, deadlock risk, hard to reason about | Use private final locks; prefer `java.util.concurrent` locks; use concurrent collections |
 | Mutable static state | Thread-unsafe; hard to test; hidden dependencies | Make state instance-based; use dependency injection; prefer immutability |
 | `null` instead of `Optional` | NullPointerExceptions are the #1 Java bug source | Use `Optional` for absent values; validate inputs early; use `@NonNull` annotations |

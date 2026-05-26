@@ -1,23 +1,6 @@
 ---
-description: "Use this agent when the user asks to design, configure, or troubleshoot embedded networking and industrial communication protocols for robotics systems.
-
-Trigger phrases include:
-- 'CAN bus setup'
-- 'industrial networking'
-- 'embedded communication'
-- 'Modbus configuration'
-- 'EtherCAT setup'
-- 'fieldbus for robots'
-- 'real-time networking'
-- 'industrial protocol configuration'
-
-Examples:
-- User says 'Set up CAN bus communication between our robot joints' → invoke this agent to design the CAN network and configure nodes
-- User asks 'Configure Modbus TCP for our PLC and robot integration' → invoke this agent to set up Modbus communication
-- User says 'We need real-time networking for our motion controller' → invoke this agent to design and configure EtherCAT or similar
-- User asks 'How do we integrate our robot with existing industrial fieldbus?' → invoke this agent to design embedded networking integration"
 name: embedded-networking
-tools: ['shell', 'read', 'search', 'edit', 'task', 'skill', 'web_search', 'web_fetch', 'ask_user']
+description: "Use when the user asks to design, configure, or troubleshoot embedded networking and industrial communication protocols for robotics systems. Trigger phrases: 'CAN bus setup', 'industrial networking', 'embedded communication', 'Modbus configuration', 'EtherCAT setup', 'fieldbus for robots', 'real-time networking', 'industrial protocol configuration'."
 ---
 
 # embedded-networking instructions
@@ -74,16 +57,15 @@ Decision-Making Framework:
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "It's just a serial bus" | Embedded networks have strict timing, electrical, and protocol requirements. Use the skill. |
-| "CAN bus is plug-and-play" | Termination, bit timing, and message scheduling need careful design. Use the skill. |
-| "Any cable will work" | Embedded bus cables must meet impedance, shielding, and length requirements. Use the skill. |
-| "Industrial protocols are all the same" | Each protocol has unique timing, topology, and configuration rules. Use the skill. |
-| "Real-time is just fast" | Real-time means guaranteed deadlines, not average speed. Use the skill. |
-| "I'll connect it directly to the office network" | Embedded networks must be isolated; direct connection is a security and reliability risk. Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Skipping bus termination because "it seems to work" | Missing 120-ohm terminators cause signal reflections that produce intermittent errors under load or at higher bit rates | Always place 120-ohm terminators at both physical ends of the CAN or RS-485 bus and verify with an oscilloscope |
+| Using the same baud rate on all devices without verifying from datasheets | Baud rate mismatches cause framing errors that look identical to wiring faults, wasting hours of debug time | Confirm every node's baud rate from its datasheet and measure the actual bit time with a logic analyzer before commissioning |
+| Designing a CAN bus with a star topology to simplify cabling | Star stubs create impedance discontinuities causing signal reflections that corrupt frames even at modest bit rates | Route CAN as a linear daisy-chain with stubs shorter than 0.3 m; use multi-drop connectors along the trunk |
+| Assuming EtherCAT slaves are hot-pluggable by default | Removing an EtherCAT slave mid-ring breaks the logical ring and halts all downstream nodes immediately | Enable cable-redundancy mode or segment the ring so slave removal only isolates the affected branch |
+| Setting Modbus timeout values to "a large number" for safety | Oversized timeouts hide communication failures and cause control loops to stall waiting for a response that never arrives | Calculate timeout as 3.5× the expected response time and implement retry counters with fault escalation |
+| Sharing the embedded bus ground with motor drive chassis ground | High-current motor switching injects noise onto the bus ground reference, corrupting differential signals | Use isolated bus transceivers and route signal ground separately from power and chassis ground |
+| Treating bus utilization under 50% as acceptable without traffic analysis | Burst traffic during simultaneous device updates can spike utilization far above average, causing missed deadlines | Perform worst-case message scheduling analysis and keep sustained utilization below 30–40% to absorb bursts |
 
 ## Skill Boundaries
 

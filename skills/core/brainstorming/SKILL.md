@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Use when starting creative work like features, components, or functionality changes - explores user intent, requirements, and design before implementation."
 ---
 
 # Brainstorming Ideas Into Designs
@@ -143,6 +143,19 @@ Wait for the user's response. If they request changes, make them and re-run the 
 - **Explore alternatives** - Always propose 2-3 approaches before settling
 - **Incremental validation** - Present design, get approval before moving on
 - **Be flexible** - Go back and clarify when something doesn't make sense
+
+## Red Flags
+
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| Designing without understanding context | Solution won't fit the codebase or user needs | Explore existing structure and requirements first |
+| Only one approach presented | Missed trade-offs, partner not involved in decision | Always propose 2-3 alternatives with reasoning |
+| Skipping user approval before planning | Partner may disagree with design; wasted work | Present design, get explicit approval, then plan |
+| Vague or ambiguous requirements in spec | Engineer guesses wrong, builds wrong thing | Clarify ambiguity; make every requirement explicit |
+| Including unrelated refactoring | Scope creep, delays current goal | Stay focused on what serves the current feature |
+| Designing without considering error handling | Fragile system, runtime failures | Include error handling and edge cases in design |
+| Large monolithic designs | Hard to implement, hard to review, hard to test | Break into smaller units with clear boundaries |
+| Skipping the spec self-review | Placeholders and inconsistencies reach engineer | Run placeholder scan, consistency check, scope check |
 
 ## Visual Companion
 

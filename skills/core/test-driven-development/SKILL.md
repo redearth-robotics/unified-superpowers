@@ -271,19 +271,15 @@ Tests-first force edge case discovery before implementing. Tests-after verify yo
 
 ## Red Flags - STOP and Start Over
 
-- Code before test
-- Test after implementation
-- Test passes immediately
-- Can't explain why test failed
-- Tests added "later"
-- Rationalizing "just this once"
-- "I already manually tested it"
-- "Tests after achieve the same purpose"
-- "It's about spirit not ritual"
-- "Keep as reference" or "adapt existing code"
-- "Already spent X hours, deleting is wasteful"
-- "TDD is dogmatic, I'm being pragmatic"
-- "This is different because..."
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Writing production code before the test exists | You have no proof the test actually catches the bug; the test may pass for the wrong reason | Delete the code. Write the test first, watch it fail for the right reason, then implement. |
+| Test passes immediately on the first run | A test that was never red doesn't prove the feature was missing; it may be testing existing behavior or nothing | Investigate why it passes; either the feature already exists or the test is wrong — fix the test until it fails. |
+| Keeping pre-written code as "reference" while writing tests | You will adapt your tests to fit the code you already have, defeating the purpose of test-first design | Delete means delete. Do not look at it. Implement fresh from the failing tests only. |
+| Adding tests after confirming the implementation works | Tests written after pass immediately and prove nothing; they test what you built, not what is required | Restart with TDD. The test-first order is what makes the cycle meaningful. |
+| Fixing a bug without a failing test that reproduces it | Without a red test you have no proof the bug is fixed and no protection against future regression | Write the minimal failing test that reproduces the bug first, then fix, then confirm green. |
+| Writing a test that mocks the function under test | You are testing the mock's behavior, not the actual code; the real function can be completely broken | Test real code. Only mock external dependencies you cannot control (network, filesystem, time). |
+| Citing sunk cost to justify keeping untested code | The time is gone regardless; keeping unverified code is technical debt that grows compound interest | Delete and restart with TDD. An hour of proper tests beats days of production debugging. |
 
 **All of these mean: Delete code. Start over with TDD.**
 

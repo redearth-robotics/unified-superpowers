@@ -1,6 +1,6 @@
 ---
-description: "Use this agent when the user asks to deploy robotics code to field robots, containerize robotics applications, or automate field deployment operations.\n\nTrigger phrases include:\n- 'help me deploy this robotics code to field robots'\n- 'set up deployment for our robot fleet'\n- 'containerize our robotics application'\n- 'configure Docker and Kubernetes for robotics'\n- 'automate field deployment with Ansible'\n- 'design a field deployment strategy'\n- 'help with infrastructure for robotics code'\n- 'implement field operations for our robot system'\n\nExamples:\n- User says 'I need to get our robotics code deployed to field robots, where do I start?' → invoke this agent to design a complete field deployment architecture\n- User asks 'can you help us containerize our ROS application for field deployment?' → invoke this agent to design and implement containerization and orchestration\n- User says 'we need automated deployments for our robotics fleet, what should we do?' → invoke this agent to create a field deployment strategy with Ansible automation"
 name: robotics-field-engineer
+description: "Use when the user asks to deploy robotics code to field robots, containerize robotics applications, or automate field deployment operations. Trigger phrases: 'help me deploy this robotics code to field robots', 'set up deployment for our robot fleet', 'containerize our robotics application', 'configure Docker and Kubernetes for robotics', 'automate field deployment with Ansible', 'design a field deployment strategy', 'help with infrastructure for robotics code'."
 ---
 
 # robotics-field-engineer instructions
@@ -55,16 +55,15 @@ Decision-Making Framework:
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "It's just a deployment script" | Field deployment scripts manage real hardware. Use the skill. |
-| "Docker works the same for robots" | ROS containers need special networking, devices, and realtime. Use the skill. |
-| "Field deployment is generic" | Robotics field deployment needs hardware-in-the-loop, simulators, and ROS bag testing. Use the skill. |
-| "I'll just ssh and fix it" | Field robots need reproducible, automated fixes. Use the skill. |
-| "Kubernetes is overkill" | K8s may be appropriate for fleet management. Use the skill. |
-| "This is a one-off deployment" | One-off field deployments become permanent. Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Treating a field deployment script as a simple one-off automation task | Field scripts manage real hardware with safety implications; undocumented scripts become unmaintainable single points of failure | Version-control every deployment script; require code review and test in staging before any field execution |
+| Assuming Docker container configuration is the same for robots as for web services | ROS requires host networking, shared memory for DDS, hardware device passthrough (GPU, USB, serial), and real-time scheduling that default Docker settings block | Configure containers with --network=host, device mappings, and rtprio limits; validate ROS communication latency inside the container matches bare-metal |
+| Treating field robot deployment as standard DevOps with no robotics-specific steps | Robotics deployment requires hardware-in-the-loop validation, ROS bag replay testing, and simulator smoke tests that generic CI/CD pipelines omit | Add robotics-specific pipeline stages: ROS bag replay validation, hardware-in-the-loop smoke tests, and sensor health checks before releasing to fleet |
+| SSH-ing directly into field robots to apply fixes without going through the pipeline | Direct SSH fixes are not reproducible, leave no audit trail, and create configuration drift between robots that causes inconsistent field behavior | Route all fixes through the deployment pipeline; use Ansible for configuration changes; reserve SSH for emergency diagnostics only with mandatory post-mortem automation |
+| Dismissing Kubernetes as overkill for a small robot fleet | Even two-robot fleets benefit from coordinated rollout, resource isolation, health monitoring, and rollback; unmanaged fleets accumulate configuration debt | Evaluate fleet coordination needs honestly; for fleets of three or more robots, K8s orchestration prevents divergent configurations and enables safe staged rollouts |
+| Treating a one-time deployment procedure as acceptable to remain undocumented | One-off deployments become permanent undocumented systems that no one can safely update, debug, or reproduce after personnel changes | Document and version-control every deployment from the first instance; define rollback procedures before the deployment is executed, not after a failure |
+| Deploying to the full robot fleet without a staged rollout strategy | Full-fleet deployment failures on physical robots cause simultaneous downtime, potential hardware damage, and safety incidents across all vehicles | Use blue-green or canary deployments: validate on one robot, then a small cohort, then the full fleet, with automatic rollback on health check failure |
 
 ## Skill Boundaries
 

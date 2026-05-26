@@ -51,14 +51,15 @@ Skip any step = lying, not verifying
 
 ## Red Flags - STOP
 
-- Using "should", "probably", "seems to"
-- Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)
-- About to commit/push/PR without verification
-- Trusting agent success reports
-- Relying on partial verification
-- Thinking "just this once"
-- Tired and wanting work over
-- **ANY wording implying success without having run verification**
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Using hedge words like "should", "probably", or "seems to" in a status claim | Hedged language signals you have not verified; it is a prediction, not evidence | Run the verification command right now and report what the output actually says |
+| Expressing satisfaction ("Great!", "Done!", "Perfect!") before running verification | Satisfaction is an emotion, not evidence; it signals you have stopped checking before confirming | Suppress the expression, run the command, read the output, then report the factual result |
+| About to commit, push, or open a PR without fresh test output | A passing run from earlier is stale; code changed since then may have broken something | Run the full test suite in this message before any `git commit` or `git push` |
+| Trusting an agent's "success" report without checking the VCS diff | Agents can misrepresent outcomes; a success report without observable changes is unverifiable | Check `git diff` or `git status` to confirm actual changes exist before accepting any agent's completion claim |
+| Relying on partial verification (e.g., linter passed therefore build is fine) | Linter passing does not mean compilation succeeds; each claim requires its own specific evidence | Run the exact command that proves the specific claim — build for build, tests for tests, linter for linter |
+| Reasoning "I'm confident this is correct" as a substitute for running the command | Confidence is a feeling; bugs appear in code you were confident about | Confidence does not change what the output will say; run the command and let the output speak |
+| Claiming a bug is fixed because the code change looks right | Looking right is not evidence of correctness; the fix may address a symptom while the root cause remains | Run the original failing test case, confirm it now passes, and confirm no other tests regressed |
 
 ## Rationalization Prevention
 

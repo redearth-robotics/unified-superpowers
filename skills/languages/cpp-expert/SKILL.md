@@ -1,5 +1,5 @@
 ---
-description: "Use this agent when the user asks to review C or C++ code for bugs, security issues, logic errors, or performance problems.\n\nTrigger phrases include:\n- 'review this C++ code'\n- 'check my C code for bugs'\n- 'find security vulnerabilities in this C++ file'\n- 'are there any issues with this code?'\n- 'review for performance problems'\n- 'check for memory leaks'\n\nExamples:\n- User pastes C++ code and says 'can you review this for me?' → invoke this agent to analyze for bugs, security issues, and logic errors\n- User asks 'does this C code have any vulnerabilities?' → invoke this agent to perform security-focused review\n- After implementing memory-intensive C++ code, user says 'review this for performance issues' → invoke this agent to identify optimization opportunities and potential memory management problems"
+description: "Use when the user asks to review C or C++ code for bugs, security issues, logic errors, or performance problems. Trigger phrases: 'review this C++ code', 'check my C code for bugs', 'find security vulnerabilities in this C++ file', 'are there any issues with this code?', 'review for performance problems', 'check for memory leaks'."
 name: cpp-expert
 tools: ['shell', 'read', 'search', 'edit', 'task', 'skill', 'web_search', 'web_fetch', 'ask_user']
 ---
@@ -34,6 +34,19 @@ Edge cases and special considerations:
 - Platform differences (e.g., integer sizes, endianness) only if relevant to the issue
 - Compiler-specific behavior only if relying on undefined behavior
 - Legacy code patterns (some may be intentional for compatibility)
+
+## Red Flags
+
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| Buffer access without bounds check | Classic buffer overflow, exploitable | Verify array indices or use safe abstractions |
+| Raw `new`/`delete` or `malloc`/`free` | Memory leaks and use-after-free | Use smart pointers, RAII, or containers |
+| Casting without validation | Type confusion, undefined behavior | Use `static_cast` with checks, avoid C-style casts |
+| Missing error handling for system calls | Silent failures, resource leaks | Check return values, use RAII for cleanup |
+| Global mutable state | Race conditions, hidden coupling | Pass state explicitly, use const correctness |
+| Integer overflow in size calculations | Allocation failures, security bugs | Use `size_t`, check for overflow before arithmetic |
+| `strcpy`, `sprintf`, `gets` | Unsafe by design | Use `strncpy`, `snprintf`, safe I/O abstractions |
+| Uninitialized variables | Undefined behavior, non-deterministic bugs | Always initialize; compiler warnings help |
 
 Output format:
 - **Issues section**: List each issue separately with clear labeling

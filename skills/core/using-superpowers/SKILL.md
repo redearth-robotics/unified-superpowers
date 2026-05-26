@@ -1,6 +1,6 @@
 ---
 name: using-superpowers
-description: Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions
+description: Use at session start to discover and load relevant skills before any response - ensures skills auto-trigger at the right moments
 ---
 
 <SUBAGENT-STOP>
@@ -79,20 +79,19 @@ digraph skill_flow {
 
 These thoughts mean STOP—you're rationalizing:
 
-| Thought | Reality |
-|---------|---------|
-| "This is just a simple question" | Questions are tasks. Check for skills. |
-| "I need more context first" | Skill check comes BEFORE clarifying questions. |
-| "Let me explore the codebase first" | Skills tell you HOW to explore. Check first. |
-| "I can check git/files quickly" | Files lack conversation context. Check for skills. |
-| "Let me gather information first" | Skills tell you HOW to gather information. |
-| "This doesn't need a formal skill" | If a skill exists, use it. |
-| "I remember this skill" | Skills evolve. Read current version. |
-| "This doesn't count as a task" | Action = task. Check for skills. |
-| "The skill is overkill" | Simple things become complex. Use it. |
-| "I'll just do this one thing first" | Check BEFORE doing anything. |
-| "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
-| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| "This is just a simple question" | Questions are tasks; skills prevent mistakes | Check for skills before answering |
+| "I need more context first" | Skill check comes BEFORE clarifying questions | Invoke relevant skill first, then ask clarifying questions |
+| "Let me explore the codebase first" | Skills tell you HOW to explore | Check for skills before exploration |
+| "I can check git/files quickly" | Files lack conversation context | Check for skills before file operations |
+| "This doesn't need a formal skill" | If a skill exists, use it | Invoke the skill |
+| "I remember this skill" | Skills evolve; current version may differ | Read current skill version each time |
+| "This doesn't count as a task" | Any action = task | Check for skills before any action |
+| "The skill is overkill" | Simple things become complex | Use the skill |
+| "I'll just do this one thing first" | Check BEFORE doing anything | Invoke skill first |
+| "This feels productive" | Undisciplined action wastes time | Follow skill guidance |
+| "I know what that means" | Knowing concept ≠ using skill correctly | Invoke the skill |
 
 ## Skill Priority
 

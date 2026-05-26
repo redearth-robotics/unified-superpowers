@@ -1,6 +1,6 @@
 ---
 name: finishing-a-development-branch
-description: Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup
+description: Use when implementation is complete and tests pass, before merging or creating PRs - determines integration strategy
 ---
 
 # Finishing a Development Branch
@@ -200,52 +200,18 @@ git worktree prune  # Self-healing: clean up any stale registrations
 | 3. Keep as-is | - | - | yes | - |
 | 4. Discard | - | - | - | yes (force) |
 
-## Common Mistakes
-
-**Skipping test verification**
-- **Problem:** Merge broken code, create failing PR
-- **Fix:** Always verify tests before offering options
-
-**Open-ended questions**
-- **Problem:** "What should I do next?" is ambiguous
-- **Fix:** Present exactly 4 structured options (or 3 for detached HEAD)
-
-**Cleaning up worktree for Option 2**
-- **Problem:** Remove worktree user needs for PR iteration
-- **Fix:** Only cleanup for Options 1 and 4
-
-**Deleting branch before removing worktree**
-- **Problem:** `git branch -d` fails because worktree still references the branch
-- **Fix:** Merge first, remove worktree, then delete branch
-
-**Running git worktree remove from inside the worktree**
-- **Problem:** Command fails silently when CWD is inside the worktree being removed
-- **Fix:** Always `cd` to main repo root before `git worktree remove`
-
-**Cleaning up harness-owned worktrees**
-- **Problem:** Removing a worktree the harness created causes phantom state
-- **Fix:** Only clean up worktrees under `.worktrees/`, `worktrees/`, or `~/.config/superpowers/worktrees/`
-
-**No confirmation for discard**
-- **Problem:** Accidentally delete work
-- **Fix:** Require typed "discard" confirmation
-
 ## Red Flags
 
-**Never:**
-- Proceed with failing tests
-- Merge without verifying tests on result
-- Delete work without confirmation
-- Force-push without explicit request
-- Remove a worktree before confirming merge success
-- Clean up worktrees you didn't create (provenance check)
-- Run `git worktree remove` from inside the worktree
-
-**Always:**
-- Verify tests before offering options
-- Detect environment before presenting menu
-- Present exactly 4 options (or 3 for detached HEAD)
-- Get typed confirmation for Option 4
-- Clean up worktree for Options 1 & 4 only
-- `cd` to main repo root before worktree removal
-- Run `git worktree prune` after removal
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| Skipping test verification | Merge broken code, create failing PR | Always verify tests before offering options |
+| Open-ended "what should I do?" | Ambiguous, wastes partner time | Present exactly 4 structured options (or 3 for detached HEAD) |
+| Cleaning up worktree for Option 2 | Removes worktree needed for PR iteration | Only cleanup for Options 1 and 4 |
+| Deleting branch before removing worktree | `git branch -d` fails, leaves stale references | Merge first, remove worktree, then delete branch |
+| Running `git worktree remove` from inside | Command fails silently | `cd` to main repo root before removal |
+| Cleaning harness-owned worktrees | Phantom state, lost work | Only clean worktrees under `.worktrees/`, `worktrees/`, or known paths |
+| No confirmation for discard | Accidentally delete work | Require typed "discard" confirmation |
+| Proceeding with failing tests | Broken code reaches main | Fix tests first, then merge |
+| Force-pushing without explicit request | Overwrites others' work, dangerous | Ask partner explicitly before force-push |
+| Removing worktree before confirming merge | Lose unmerged work | Confirm merge success before cleanup |
+| Presenting options without detecting env | Options may not apply (e.g., detached HEAD) | Detect environment first, then present appropriate menu |

@@ -54,6 +54,18 @@ After all tasks complete and verified:
 
 **Don't force through blockers** - stop and ask.
 
+## Red Flags
+
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| Starting before reading the full plan | Miss dependencies, skip critical steps | Read and review plan before any implementation |
+| Skipping verifications between tasks | Broken code accumulates, harder to debug later | Run specified tests after every task |
+| Guessing when blocked | Wasted time, wrong fixes, context pollution | Stop and ask for clarification |
+| Modifying plan without partner approval | Diverges from agreed scope | Discuss changes before altering plan |
+| Ignoring "REQUIRED SUB-SKILL" markers | Missing critical workflow steps | Always invoke required sub-skills as specified |
+| Working on main/master branch | Risks breaking production, conflicts with other work | Use isolated workspace (worktree or branch) |
+| Proceeding with failing verifications | Broken code accumulates | Fix failures before marking task complete |
+
 ## Remember
 - Review plan critically first
 - Follow plan steps exactly

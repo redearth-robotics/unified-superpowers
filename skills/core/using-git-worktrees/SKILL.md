@@ -198,18 +198,12 @@ Ready to implement <feature-name>
 
 ## Red Flags
 
-**Never:**
-- Create a worktree when Step 0 detects existing isolation
-- Use `git worktree add` when you have a native worktree tool (e.g., `EnterWorktree`). This is the #1 mistake — if you have it, use it.
-- Skip Step 1a by jumping straight to Step 1b's git commands
-- Create worktree without verifying it's ignored (project-local)
-- Skip baseline test verification
-- Proceed with failing tests without asking
-
-**Always:**
-- Run Step 0 detection first
-- Prefer native tools over git fallback
-- Follow directory priority: existing > global legacy > instruction file > default
-- Verify directory is ignored for project-local
-- Auto-detect and run project setup
-- Verify clean test baseline
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Creating a new worktree when Step 0 detects you are already in an isolated workspace | Produces a nested worktree your harness cannot track, polluting the repo state | Run Step 0 first; if `GIT_DIR != GIT_COMMON` and you are not in a submodule, skip creation and proceed to Step 3 |
+| Running `git worktree add` when a native tool like `EnterWorktree` is available | The native tool manages directory placement, branch creation, and cleanup; manual git worktree creates phantom state the harness cannot see | Always try Step 1a first; only fall back to git commands if no native worktree tool exists |
+| Skipping `git check-ignore` before creating a project-local worktree | If the directory is not ignored, the worktree contents pollute `git status` and can be accidentally committed | Run `git check-ignore -q .worktrees` before creating; if not ignored, add it to `.gitignore` and commit first |
+| Choosing a worktree directory without following the priority order | Inconsistent placement violates project conventions and creates confusion about where worktrees live | Follow the priority: explicit user preference → existing `.worktrees/` or `worktrees/` → global legacy path → instruction file default |
+| Proceeding with implementation when the baseline test run shows failures | You cannot distinguish bugs you introduce from pre-existing failures, making debugging impossible | Report the failures to your human partner and ask whether to proceed or investigate before continuing |
+| Treating a submodule as an existing linked worktree and skipping worktree creation | `GIT_DIR != GIT_COMMON` is also true inside submodules; skipping creation inside a submodule leaves work in the wrong location | Check `git rev-parse --show-superproject-working-tree`; if it returns a path, you are in a submodule — treat as a normal repo |
+| Skipping dependency installation after creating the worktree | Missing dependencies cause build and test failures that look like code bugs instead of setup problems | Auto-detect the project type from lock files and run the appropriate install command before running baseline tests |

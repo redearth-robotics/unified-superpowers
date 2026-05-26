@@ -4,9 +4,10 @@
   "description": "Combined security testing and robotics engineering skillset",
   "domains": {
     "core": {
-      "count": 14,
+      "count": 15,
       "skills": [
         "brainstorming",
+        "dispatching-parallel-agents",
         "executing-plans",
         "finishing-a-development-branch",
         "receiving-code-review",
@@ -103,23 +104,27 @@
       ]
     },
     "languages": {
-      "count": 11,
+      "count": 15,
       "skills": [
         "cpp-expert",
         "cpp-misra-auditor",
+        "data-pipeline-architect",
+        "devops-engineer",
         "go-expert",
         "hunt-api-misconfig",
         "hunt-aspnet",
         "java-expert",
         "javascript-expert",
+        "linux-ubuntu-expert",
         "matlab-expert",
         "python-expert",
         "rust-expert",
+        "software-architect",
         "web-expert"
       ]
     }
   },
-  "total_skills": 95,
+  "total_skills": 100,
   "sources": [
     {
       "name": "Claude-BugHunter",
@@ -128,7 +133,7 @@
     },
     {
       "name": "robotics-superpowers",
-      "path": "/tmp/robotics-superpowers",
+      "path": "/home/frederichtran199/Code/tools/robotics-superpowers",
       "skills_contributed": 47
     }
   ],

@@ -644,6 +644,18 @@ How future Claude finds your skill:
 
 **Optimize for this flow** - put searchable terms early and often.
 
+## Red Flags
+
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Writing a skill before running a baseline scenario with a subagent | You do not know what agents actually do wrong without seeing it; the skill will address hypothetical violations instead of real ones | Run the pressure scenario without the skill first, document exact rationalizations verbatim, then write the skill to address those specific failures |
+| Skipping the test because "the skill is obviously clear" | Clear to you does not mean clear to other agents; every untested skill has gaps that only show up in practice | Run at least one application or pressure scenario per skill type before declaring it deployable |
+| Adding workflow steps to the description field | When descriptions summarize the workflow, agents follow the description shortcut and skip reading the full skill body | Write descriptions as triggering conditions only ("Use when..."), never as workflow summaries |
+| Creating multiple skills in a batch without testing each one | Each untested skill carries hidden gaps that compound; batch creation bypasses the RED-GREEN-REFACTOR cycle entirely | Complete the full TDD cycle for each skill before moving to the next: baseline → write → verify → refactor |
+| Discovering a new rationalization and re-reading the skill instead of updating it | A rationalization that succeeds once is a loophole; reading existing text again does not close it | Add an explicit counter to the skill for every new rationalization found in testing, then re-verify |
+| Using narrative description ("In session X we found that...") as skill content | Narratives are too specific to one event; they do not generalize and future agents will not recognize when to apply the pattern | Rewrite as a reusable technique or pattern in second person with clear triggering conditions |
+| Skipping YAML frontmatter or using an invalid skill name (special characters, parentheses) | Malformed frontmatter prevents the skill from loading correctly in agent harnesses | Ensure `name` uses only letters, numbers, and hyphens; keep `description` under 1024 characters total |
+
 ## The Bottom Line
 
 **Creating skills IS TDD for process documentation.**

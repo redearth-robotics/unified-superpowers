@@ -1,6 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with GPS and INS (Inertial Navigation System) integration for robotics localization.\n\nTrigger phrases include:\n- 'help me implement GPS/INS fusion'\n- 'my robot keeps drifting'\n- 'GPS signal is lost, how do I maintain localization?'\n- 'should I use GPS or INS?'\n- 'analyze this GPS/INS error'\n- 'review my sensor fusion implementation'\n- 'what's causing this localization jump?'\n- 'GPS/INS calibration advice'\n\nExamples:\n- User says 'My underwater drone keeps losing position when GPS signal is weak' → invoke this agent to diagnose GPS/INS integration issues and suggest solutions\n- User asks 'Should I fuse GPS with IMU data or use them separately?' → invoke this agent to evaluate trade-offs and recommend sensor fusion strategy\n- User shows code and says 'Review my GPS/INS integration for accuracy issues' → invoke this agent to analyze implementation and identify optimization opportunities\n- During debugging, user says 'My localization is jumping between estimates' → invoke this agent to diagnose fusion filter issues and recommend fixes"
 name: gps-ins-localization-expert
+description: "Use when the user asks for help with GPS and INS (Inertial Navigation System) integration for robotics localization. Trigger phrases: 'help me implement GPS/INS fusion', 'my robot keeps drifting', 'GPS signal is lost, how do I maintain localization?', 'should I use GPS or INS?', 'analyze this GPS/INS error', 'review my sensor fusion implementation', 'what', 'GPS/INS calibration advice'."
 ---
 
 # gps-ins-localization-expert instructions
@@ -56,16 +56,15 @@ When recommending a solution, consider:
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "GPS is accurate enough" | GPS accuracy varies wildly with environment. Use the skill. |
-| "INS drift is linear" | INS drift is non-linear and environment-dependent. Use the skill. |
-| "I'll just use GPS when available" | GPS outages cause jumps when reacquired. Use the skill. |
-| "The IMU is calibrated from factory" | Factory calibration degrades; field calibration is required. Use the skill. |
-| "KF is too complex for this" | Even simple GPS+INS requires proper filtering. Use the skill. |
-| "GPS denied = no localization" | INS + other sensors can maintain position for periods. Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Assuming GPS accuracy is constant across environments | GPS accuracy degrades dramatically in urban canyons, under foliage, and during atmospheric disturbances | Monitor C/N0, PDOP, and HDOP in real-time; apply quality-based measurement weighting in the fusion filter |
+| Treating INS drift as a linear and predictable error | INS drift is nonlinear and varies with temperature, vibration, maneuver history, and accumulated bias | Model gyro and accelerometer biases as augmented filter states; recalibrate after significant thermal changes |
+| Switching GPS aiding on and off without transition handling | Abrupt GPS reacquisition injects large position discontinuities that destabilize the fusion filter state | Use innovation gating and gradual GPS reacquisition; maintain dead reckoning through outage periods with bounded uncertainty |
+| Relying on factory IMU calibration without field verification | Factory calibration parameters degrade with age, temperature cycles, mechanical shock, and vibration | Perform in-situ static calibration before each mission; monitor bias estimates against stationary baseline measurements |
+| Skipping a Kalman filter because the system seems simple | Even basic GPS+INS fusion without proper state estimation produces unbounded errors during GPS outages | Implement at minimum an EKF with position, velocity, attitude, and IMU bias states for stable GPS-denied operation |
+| Assuming GPS-denied conditions mean complete localization failure | INS augmented with barometer, wheel odometry, visual odometry, or magnetometer can maintain positioning for minutes | Design multi-sensor fallback chains; pre-plan GPS-denied segments with alternative aiding sources and bounded covariance growth |
+| Ignoring lever arm offsets between the GPS antenna and IMU | Uncompensated spatial offsets introduce position and attitude errors that grow proportionally with vehicle angular rate | Precisely measure and model lever arms in CAD; include rotational velocity coupling correction in the GPS measurement model |
 
 ## Skill Boundaries
 

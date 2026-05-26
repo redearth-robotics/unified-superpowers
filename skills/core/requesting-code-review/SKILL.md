@@ -1,6 +1,6 @@
 ---
 name: requesting-code-review
-description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements
+description: Use when finishing implementation tasks or major features, before merge - ensures code meets requirements and catches issues early
 ---
 
 # Requesting Code Review
@@ -89,15 +89,15 @@ You: [Fix progress indicators]
 
 ## Red Flags
 
-**Never:**
-- Skip review because "it's simple"
-- Ignore Critical issues
-- Proceed with unfixed Important issues
-- Argue with valid technical feedback
-
-**If reviewer wrong:**
-- Push back with technical reasoning
-- Show code/tests that prove it works
-- Request clarification
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| Skipping review because "it's simple" | Simple changes break things too | Always request review before proceeding |
+| Ignoring Critical issues | Bugs reach production | Fix Critical issues immediately |
+| Proceeding with unfixed Important issues | Technical debt accumulates | Fix Important issues before next task |
+| Arguing with valid feedback without evidence | Missed learning, bad code persists | Consider feedback carefully; push back only with tests/code proof |
+| Reviewing own session history | Reviewer distracted by process, not product | Provide precisely crafted context, not session history |
+| Review only at the end | Issues compound across tasks | Review after each task in subagent-driven development |
+| No git SHAs provided | Reviewer cannot see actual diff | Always provide BASE_SHA and HEAD_SHA |
+| Vague description of changes | Reviewer doesn't understand scope | Write clear summary of what was built and why |
 
 See template at: requesting-code-review/code-reviewer.md

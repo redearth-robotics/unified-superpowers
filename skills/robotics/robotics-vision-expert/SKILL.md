@@ -1,6 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with computer vision for robotics, including object detection, visual SLAM, camera calibration, depth sensing, or image processing on robotic platforms.\n\nTrigger phrases include:\n- 'object detection for my robot'\n- 'visual SLAM implementation'\n- 'camera calibration'\n- 'stereo vision'\n- 'help with robot perception'\n- 'how do I process camera data on my robot?'\n- 'review my vision pipeline'\n- 'depth sensing setup'\n- 'visual odometry for ground robot'\n- 'track objects with my robot camera'\n- 'camera intrinsic calibration'\n- 'point cloud processing'\n\nExamples:\n- User says 'I want my robot to detect and pick up red boxes' → invoke this agent to design an object detection and pose estimation pipeline\n- User asks 'How do I set up visual SLAM for my indoor mobile robot?' → invoke this agent to recommend algorithms and integration steps\n- User shows code and says 'Review my OpenCV image processing pipeline' → invoke this agent to validate correctness and performance\n- During development, user says 'My stereo camera isn't giving accurate depth' → invoke this agent to debug calibration and stereo matching\n- User reports 'The robot loses track of the target when it moves quickly' → invoke this agent to analyze motion blur, latency, and tracking robustness"
 name: robotics-vision-expert
+description: "Use when the user asks for help with computer vision for robotics, including object detection, visual SLAM, camera calibration, depth sensing, or image processing on robotic platforms. Trigger phrases: 'object detection for my robot', 'visual SLAM implementation', 'camera calibration', 'stereo vision', 'help with robot perception', 'how do I process camera data on my robot?', 'review my vision pipeline', 'depth sensing setup', 'visual odometry for ground robot'."
 ---
 
 # robotics-vision-expert instructions
@@ -77,16 +77,15 @@ Help users design, implement, debug, and optimize computer vision subsystems for
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "The camera is calibrated, that's enough" | Calibration drifts; verification and re-calibration are ongoing requirements. Use the skill. |
-| "Higher resolution always helps" | Higher resolution increases latency and noise; match resolution to task requirements. Use the skill. |
-| "YOLO is the best for everything" | Algorithm choice depends on accuracy, latency, and compute constraints. Use the skill. |
-| "Visual SLAM is just feature matching" | SLAM involves bundle adjustment, loop closure, and global optimization. Use the skill. |
-| "I can fix tracking with a bigger model" | Larger models increase latency and may not solve the root cause. Use the skill. |
-| "The image looks fine to me" | Human perception differs from algorithmic requirements (contrast, noise, distortion). Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Declaring camera calibration complete after a single collection session | Camera calibration drifts after thermal cycling, mechanical vibration, lens refocusing, or physical impact to the mount | Re-validate calibration periodically using reprojection error on held-out data; monitor calibration quality continuously in production |
+| Increasing image resolution to improve detection or depth accuracy | Higher resolution increases inference latency, memory bandwidth, and noise sensitivity without improving accuracy beyond the model's design resolution | Profile detection accuracy versus resolution across representative scenes; down-scale to the network's native input resolution with proper anti-aliasing |
+| Selecting YOLO as the default detection model regardless of platform and task | Detection accuracy, inference latency, model size, and embedded deployment constraints all require algorithm selection specific to the platform and use case | Benchmark multiple models (YOLO, SSD, EfficientDet, RT-DETR) against platform latency budget and accuracy requirements before committing |
+| Treating visual SLAM as a simple feature matching pipeline | SLAM requires bundle adjustment, loop closure detection, map management, scale initialization, and global consistency optimization | Use established SLAM frameworks (ORB-SLAM3, OpenVINS, RTAB-Map); understand each pipeline stage before modifying parameters |
+| Deploying a larger detection model to fix unstable or jittery tracking | Model size does not fix root causes of tracking instability: poor lighting, calibration error, insufficient frame rate, or inadequate motion model | Diagnose whether instability originates from detection jitter, missed frames, or motion model mismatch before changing model architecture |
+| Trusting visual image quality as a sufficient proxy for algorithmic performance | Human perception tolerates noise, blur, and distortion that cause algorithmic failures; contrast and sharpness must be quantified, not judged | Measure SSIM, SNR, and feature response scores quantitatively; validate pipeline detection output against ground truth annotations |
+| Assuming camera-to-robot extrinsic calibration remains stable after deployment | Vibration, thermal expansion, and mechanical wear gradually shift camera mounting, invalidating all spatial computations depending on the transform | Implement periodic extrinsic calibration checks using environmental landmarks or dedicated calibration targets mounted on the robot |
 
 ## Skill Boundaries
 

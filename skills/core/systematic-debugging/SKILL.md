@@ -214,18 +214,15 @@ You MUST complete each phase before proceeding to the next.
 
 ## Red Flags - STOP and Follow Process
 
-If you catch yourself thinking:
-- "Quick fix for now, investigate later"
-- "Just try changing X and see if it works"
-- "Add multiple changes, run tests"
-- "Skip the test, I'll manually verify"
-- "It's probably X, let me fix that"
-- "I don't fully understand but this might work"
-- "Pattern says X but I'll adapt it differently"
-- "Here are the main problems: [lists fixes without investigation]"
-- Proposing solutions before tracing data flow
-- **"One more fix attempt" (when already tried 2+)**
-- **Each fix reveals new problem in different place**
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Proposing a fix before completing root cause investigation | Fixing symptoms leaves the underlying cause intact; the bug will recur | Complete Phase 1 fully — read the error, reproduce it, check recent changes — before touching any code |
+| Running multiple simultaneous changes to see if one sticks | You cannot isolate what fixed the bug, and you may introduce new ones | Form a single hypothesis, make the smallest possible change to test it, and verify before proceeding |
+| Skipping the failing test because "I'll manually verify" | Manual verification is not repeatable; the fix can silently break again with no safety net | Write an automated failing test first, then implement the fix so the test proves it stays fixed |
+| Saying "It's probably X" and immediately coding the fix | Probability is not evidence; guessing sets a pattern of thrashing that compounds with each miss | State the hypothesis explicitly, gather evidence that confirms it, then and only then implement |
+| Attempting a fourth fix after three have already failed | Three failures signal an architectural problem, not a debugging problem; more fixes deepen the hole | Stop, question the architecture, and discuss with your human partner before attempting any further changes |
+| Tracing to a symptom in the call stack and fixing there | The symptom is downstream of the real cause; fixing it creates a patch that hides the source | Keep tracing backward up the call stack until you find where the bad value or bad state originates |
+| Skipping evidence gathering in a multi-component system and guessing which layer fails | Without instrumentation you cannot know which boundary is broken; guesses waste time and spread changes | Add diagnostic logging at each component boundary, run once to see where it breaks, then investigate that layer |
 
 **ALL of these mean: STOP. Return to Phase 1.**
 

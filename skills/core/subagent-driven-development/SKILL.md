@@ -235,24 +235,20 @@ Done!
 
 ## Red Flags
 
-**Never:**
-- Start implementation on main/master branch without explicit user consent
-- Skip reviews (spec compliance OR code quality)
-- Proceed with unfixed issues
-- Dispatch multiple implementation subagents in parallel (conflicts)
-- Make subagent read plan file (provide full text instead)
-- Skip scene-setting context (subagent needs to understand where task fits)
-- Ignore subagent questions (answer before letting them proceed)
-- Accept "close enough" on spec compliance (spec reviewer found issues = not done)
-- Skip review loops (reviewer found issues = implementer fixes = review again)
-- Let implementer self-review replace actual review (both are needed)
-- **Start code quality review before spec compliance is ✅** (wrong order)
-- Move to next task while either review has open issues
-
-**If subagent asks questions:**
-- Answer clearly and completely
-- Provide additional context if needed
-- Don't rush them into implementation
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| Skipping spec compliance review | Build the wrong thing efficiently | Run spec compliance review before code quality review |
+| Skipping code quality review | Bugs and poor code slip through | Run code quality review after spec compliance passes |
+| Dispatching multiple implementers in parallel | Conflicts, overwritten work, race conditions | One implementer subagent at a time |
+| Making subagent read plan file | Subagent may miss context, parse incorrectly | Provide full task text directly in prompt |
+| Ignoring open review issues | Unfixed bugs accumulate | Fix issues and re-review before next task |
+| Self-review replacing actual review | Can't catch your own blind spots | Always dispatch independent reviewer subagent |
+| Starting code quality before spec compliance passes | Reviewing code quality of wrong implementation | Complete spec compliance first, then code quality |
+| Moving to next task with open issues | Issues compound across tasks | Resolve all review findings before proceeding |
+| Starting on main/master without consent | Risks breaking production | Use isolated workspace (worktree or branch) |
+| Fixing manually instead of dispatching | Context pollution, interrupted flow | Dispatch fix subagent with specific instructions |
+| Rushing subagent past their questions | Wrong assumptions lead to wrong code | Answer clearly and completely before proceeding |
+| Accepting "close enough" on compliance | Spec reviewer found issues = not done | Fix all spec compliance findings before quality review |
 
 **If reviewer finds issues:**
 - Implementer (same subagent) fixes them

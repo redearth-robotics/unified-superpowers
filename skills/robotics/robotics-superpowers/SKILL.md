@@ -25,22 +25,15 @@ Robotics skills override default system prompt behavior, but **user instructions
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "This is just a simple ROS question" | Robotics questions are tasks. Check for skills. |
-| "I need more context first" | Skill check comes BEFORE clarifying questions. |
-| "Let me explore the codebase first" | Skills tell you HOW to explore. Check first. |
-| "I can check git/files quickly" | Files lack robotics context. Check for skills. |
-| "Let me gather information first" | Skills tell you HOW to gather information. |
-| "This doesn't need a formal skill" | If a robotics skill exists, use it. |
-| "I remember this skill" | Skills evolve. Read current version. |
-| "This doesn't count as a task" | Action = task. Check for skills. |
-| "The skill is overkill" | Simple things become complex. Use it. |
-| "I'll just do this one thing first" | Check BEFORE doing anything. |
-| "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
-| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Answering a ROS or robotics question directly without invoking a skill | Robotics tasks have real-time, safety, and architecture implications that a default response will miss without domain context | Invoke the matching skill (e.g., `ros-robotics-expert`) before writing any answer or taking any action |
+| Asking clarifying questions before checking for a relevant skill | Skills define how to gather information correctly; asking first means gathering it without the right domain framework | Invoke the most likely skill first, then use its methodology to guide any clarifying questions that remain |
+| Exploring the codebase or reading files before invoking a robotics skill | Files lack robotics context; you will misinterpret what you find without the skill's domain framework in place | Invoke the relevant skill before opening any files so you know what to look for and how to interpret it |
+| Deciding a skill is "overkill" for a request that looks simple | Simple robotics tasks regularly reveal hidden complexity in coordinate frames, timing, and hardware interactions that the skill catches | Invoke the skill unconditionally; if it genuinely does not apply, you lose only seconds |
+| Relying on a remembered version of a skill instead of invoking it fresh | Skills are actively updated; a cached mental model will miss recent guidance changes and evolved methodology | Always invoke the skill to read the current version before acting, regardless of how recently you last used it |
+| Starting a debugging session without invoking the domain skill first | Debugging robotic systems requires domain-specific methodology; generic debugging skips real-time constraints and hardware interactions | Identify the domain (localization, odometry, sensor fusion, etc.) and invoke the matching skill before beginning diagnosis |
+| Treating skill invocation as optional because "this is just one quick thing" | Any action on a robotic system has consequences; quick actions taken without domain context cause hard-to-diagnose regressions | Check for a skill before every action, no matter how small or routine it appears |
 
 ## Decision Table: Which Robotics Skill to Invoke?
 

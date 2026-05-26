@@ -1,6 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with robotics odometry problems including ground-based odometry, wheel encoders, IMU integration, or underwater odometry systems.\n\nTrigger phrases include:\n- 'help me debug my odometry'\n- 'analyze this odometry log'\n- 'wheel encoder drift'\n- 'how do I improve odometry accuracy?'\n- 'what's wrong with my underwater drone positioning?'\n- 'analyze my IMU integration logs'\n- 'odometry sensor calibration advice'\n- 'ground robot localization issues'\n- 'review my odometry implementation'\n\nExamples:\n- User says 'My underwater robot keeps drifting, can you help?' → invoke this agent to analyze underwater odometry challenges and suggest solutions\n- User shows a log file and asks 'What's causing these jumps in the odometry data?' → invoke this agent to diagnose issues and recommend fixes\n- User says 'Should I use wheel encoders or IMU fusion for ground robots?' → invoke this agent for guidance on odometry strategy trade-offs\n- During development, user says 'Review my dead-reckoning implementation for odometry accuracy' → invoke this agent to evaluate approach and identify optimization opportunities"
 name: robotics-odometry-expert
+description: "Use when the user asks for help with robotics odometry problems including ground-based odometry, wheel encoders, IMU integration, or underwater odometry systems. Trigger phrases: 'help me debug my odometry', 'analyze this odometry log', 'wheel encoder drift', 'how do I improve odometry accuracy?', 'what', 'analyze my IMU integration logs', 'odometry sensor calibration advice', 'ground robot localization issues', 'review my odometry implementation'."
 ---
 
 # robotics-odometry-expert instructions
@@ -57,16 +57,15 @@ Edge case handling:
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "This is just wheel slip" | Wheel slip is a symptom, not a diagnosis. Use the skill. |
-| "Visual odometry is always noisy" | VO noise patterns reveal calibration and tuning issues. Use the skill. |
-| "I'll just filter the data more" | Over-filtering destroys information. Use the skill. |
-| "The IMU is calibrated" | IMU calibration drifts with temperature and vibration. Use the skill. |
-| "Dead reckoning is good enough" | Dead reckoning accumulates error exponentially. Use the skill. |
-| "It's just a scale factor error" | Scale factor errors compound over distance. Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Diagnosing all odometry drift as simply "wheel slip" | Wheel slip is one of many causes; it must be distinguished from encoder miscalibration, wheel radius error, and kinematic model mismatch | Measure slip independently by comparing wheel odometry against IMU integration; verify wheel radius and baseline with controlled measured runs |
+| Dismissing visual odometry noise as inherent and unavoidable | VO noise patterns encode information about calibration quality, feature selection, motion blur, and lighting conditions | Analyze residual distributions per feature type; separate calibration errors from environmental factors before accepting noise as acceptable |
+| Adding more low-pass filtering to smooth noisy odometry output | Excessive filtering introduces phase lag that corrupts velocity estimates, distorts time-series analysis, and destabilizes dependent control loops | Diagnose the noise source first; fix calibration errors or motion model deficiencies rather than masking them with additional filtering |
+| Assuming IMU calibration from factory initialization remains valid | IMU bias and scale factors drift with temperature changes, mechanical vibration, and aging even hours after a static calibration | Estimate IMU biases as augmented Kalman filter states; monitor bias estimates over time for drift; re-calibrate after thermal or mechanical changes |
+| Relying on dead reckoning for extended periods without external correction | Integration errors accumulate as a random walk; position uncertainty grows without bound during GPS-denied or GPS-unavailable intervals | Implement loop closure detection, map-based correction, or external aiding (GPS, fiducial markers, UWB) at regular intervals |
+| Treating a scale factor error as negligible or a one-time correction | A 1% scale factor error compounds to 1 m of position error per 100 m traveled, and interacts with heading errors to produce unbounded divergence | Calibrate wheel radius against a precisely measured baseline; validate odometry scale over full expected operational distances |
+| Applying the same kinematic model across all terrain types | Flat-pavement kinematic models fail on slopes, gravel, mud, or compliant ground where wheel slip and sinkage introduce significant unmodeled errors | Characterize terrain-dependent slip parameters with controlled experiments; implement adaptive slip models triggered by terrain classification |
 
 ## Skill Boundaries
 

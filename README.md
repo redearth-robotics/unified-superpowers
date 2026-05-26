@@ -1,6 +1,6 @@
 # Unified Superpowers Toolkit
 
-🚀 **95 AI skills** for security testing, robotics engineering, and software development — all in one comprehensive toolkit.
+🚀 **100 AI skills** for security testing, robotics engineering, and software development — all in one comprehensive toolkit.
 
 ## 🎯 What This Is
 
@@ -15,9 +15,9 @@ A unified skill collection that combines:
 |--------|--------|---------|
 | 🔒 Security | 52 | Bug bounty, pentesting, vulnerability research |
 | 🤖 Robotics | 18 | ROS, GPS/INS, SLAM, embedded systems |
-| 💻 Languages | 11 | Python, C++, Rust, JavaScript, MATLAB |
-| ⚙️ Core Process | 14 | Debugging, testing, planning, code review |
-| **Total** | **95** | **Complete development lifecycle** |
+| 💻 Languages | 15 | Python, C++, Rust, JavaScript, MATLAB, DevOps |
+| ⚙️ Core Process | 15 | Debugging, testing, planning, code review |
+| **Total** | **100** | **Complete development lifecycle** |
 
 ## 🚀 Quick Start
 
@@ -61,7 +61,7 @@ Skills auto-trigger based on your queries. Just ask naturally:
 ```
 unified-superpowers/
 ├── skills/
-│   ├── core/              # Process skills (14)
+│   ├── core/              # Process skills (15)
 │   │   ├── brainstorming          # Design & spec creation
 │   │   ├── systematic-debugging   # Bug investigation
 │   │   ├── test-driven-development # TDD methodology
@@ -77,7 +77,7 @@ unified-superpowers/
 │   │   ├── gps-ins-localization   # GPS/INS sensor fusion
 │   │   ├── fusion-filter-robotics # Kalman/EKF filters
 │   │   └── ...
-│   └── languages/         # Language expertise (11)
+│   └── languages/         # Language expertise (15)
 │       ├── python-expert          # Python debugging & optimization
 │       ├── cpp-expert             # C++ review & MISRA compliance
 │       ├── rust-expert            # Rust safety & performance
@@ -181,7 +181,7 @@ cd unified-superpowers
 ```bash
 # Check skill count
 find skills -name "SKILL.md" | wc -l
-# Should output: 95
+# Should output: 100
 ```
 
 ### Platform-Specific Setup
@@ -218,7 +218,7 @@ Example:
 
 ## 📚 Skill Catalog
 
-For a complete listing of all 95 skills organized by domain, see [SKILL_CATALOG.md](SKILL_CATALOG.md).
+For a complete listing of all 100 skills organized by domain, see [SKILL_CATALOG.md](SKILL_CATALOG.md).
 
 ## 🔄 Updates & Maintenance
 
@@ -255,13 +255,13 @@ This toolkit is a local integration combining skills from two major repositories
 - Skills: ROS, GPS/INS fusion, localization, embedded systems, sensor fusion
 - License: See individual skill directories
 
-**Core Process Skills (14 skills)**
+**Core Process Skills (15 skills)**
 - Source: robotics-superpowers
-- Skills: Debugging, testing, planning, code review, git workflows
+- Skills: Debugging, testing, planning, code review, git workflows, parallel agents
 
-**Language Skills (11 skills)**
+**Language Skills (15 skills)**
 - Source: Both repositories
-- Skills: Python, C++, Rust, JavaScript, MATLAB, Go, Java
+- Skills: Python, C++, Rust, JavaScript, MATLAB, Go, Java, DevOps, Linux, Software Architecture
 
 ### Integration Notes
 
@@ -286,7 +286,7 @@ See individual skill directories for their original licenses. This integration m
 - **Issues**: Report issues via GitHub Issues
 - **Original Sources**:
   - [obra/superpowers](https://github.com/obra/superpowers): Security testing skills (52 skills)
-  - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers): Robotics engineering skills (18 skills)
+  - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers): Robotics engineering skills (47 skills)
 
 ---
 

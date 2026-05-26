@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: Use when you have validated requirements for multi-step implementation after brainstorming approval - creates bite-sized task breakdown
 ---
 
 # Writing Plans
@@ -112,6 +112,20 @@ Every step must contain the actual content an engineer needs. These are **plan f
 - "Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)
 - Steps that describe what to do without showing how (code blocks required for code steps)
 - References to types, functions, or methods not defined in any task
+
+## Red Flags
+
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| "TBD", "TODO", "implement later" | Engineer has no guidance | Write complete code, commands, expected output |
+| Vague steps without code blocks | Engineer doesn't know what to write | Include complete code in every step |
+| "Similar to Task N" | Engineer may read tasks out of order | Repeat full code in each relevant task |
+| Undefined types/functions referenced | Plan has internal inconsistencies | Define all types, signatures in earlier tasks |
+| Missing test code in test steps | Engineer writes inadequate tests | Include actual test assertions, not "write tests" |
+| No file paths specified | Engineer guesses wrong locations | Use exact file paths in every task |
+| Spec requirement with no matching task | Feature gets skipped | Add task for every spec requirement |
+| Tasks too large (hours of work) | Hard to review, hard to debug | Break into 2-5 minute steps |
+| Plan covers multiple subsystems | Unclear boundaries, merge conflicts | Split into separate plans per subsystem |
 
 ## Remember
 - Exact file paths always

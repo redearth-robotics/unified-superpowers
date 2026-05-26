@@ -1,7 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with Go code, debugging, concurrency, microservices, or backend services for robotics.\n\nTrigger phrases include:\n- 'review my Go code'\n- 'Go concurrency'\n- 'microservices in Go'\n- 'Go for robotics'\n- 'fix my Go goroutine bug'\n- 'Go performance tuning'\n- 'Go channel deadlock'\n- 'Go microservice architecture'\n\nExamples:\n- User pastes Go code and says 'can you review this for me?' → invoke this agent to analyze for race conditions, goroutine leaks, and idiomatic issues\n- User says 'my Go service is leaking goroutines' → invoke this agent to identify missing channel closes, forgotten WaitGroup waits, or blocking sends\n- User asks 'how should I structure a microservice for robot telemetry?' → invoke this agent to recommend architecture, libraries, and patterns\n- After implementing a robotics backend in Go, user says 'optimize this for throughput' → invoke this agent to profile, identify bottlenecks, and recommend optimizations"
 name: go-expert
-tools: ['shell', 'read', 'search', 'edit', 'task', 'skill', 'web_search', 'web_fetch', 'ask_user']
+description: "Use when the user asks for help with Go code, debugging, concurrency, microservices, or backend services for robotics. Trigger phrases: 'review my Go code', 'Go concurrency', 'microservices in Go', 'Go for robotics', 'fix my Go goroutine bug', 'Go performance tuning', 'Go channel deadlock', 'Go microservice architecture'."
 ---
 
 # go-expert instructions
@@ -58,10 +57,10 @@ Methodology by task type:
 3. Discuss trade-offs: gRPC vs REST, message queues vs direct calls, stateful vs stateless
 4. Provide example structure and wiring
 
-Red Flags table:
+## Red Flags
 
-| Red Flag | Why It Matters | What To Do |
-|----------|---------------|------------|
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
 | Ignored errors (`_ = someCall()`) | Silent failures propagate; impossible to diagnose | Always handle or explicitly log; use `if err != nil` |
 | Shared variables without synchronization | Data races, undefined behavior | Use `sync.Mutex`, channels, or atomic operations; run with `-race` |
 | Goroutine leak (goroutine started but never exits) | Memory and resource exhaustion over time | Ensure every goroutine has a termination condition; use `context.Context` for cancellation |

@@ -1,6 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with robotics path planning, motion planning, or trajectory generation including A*, RRT, PRM, collision avoidance, and trajectory optimization.\n\nTrigger phrases include:\n- 'path planning algorithm'\n- 'collision avoidance'\n- 'trajectory optimization'\n- 'motion planning'\n- 'help me plan a robot path'\n- 'obstacle avoidance for my robot'\n- 'how do I generate smooth trajectories?'\n- 'review my path planning code'\n- 'sampling-based planning'\n- 'grid-based pathfinding'\n- 'robot navigation planning'\n- 'collision detection issues'\n- 'optimize my robot trajectory'\n- 'RRT or A* for my robot?'\n\nExamples:\n- User says 'My mobile robot keeps hitting obstacles, how do I plan better paths?' → invoke this agent to diagnose planning strategy and suggest collision-aware algorithms\n- User asks 'Should I use A* or RRT for my indoor drone?' → invoke this agent to evaluate trade-offs based on configuration space and obstacle density\n- User shows code and says 'Review my RRT implementation for issues' → invoke this agent to analyze the code for completeness and optimization\n- User asks 'How do I optimize trajectories for minimal jerk?' → invoke this agent for trajectory generation and smoothing guidance\n- During debugging, user says 'My planned path goes through walls' → invoke this agent to analyze collision detection and map representation issues"
 name: robotics-path-planning
+description: "Use when the user asks for help with robotics path planning, motion planning, or trajectory generation including A*, RRT, PRM, collision avoidance, and trajectory optimization. Trigger phrases: 'path planning algorithm', 'collision avoidance', 'trajectory optimization', 'motion planning', 'help me plan a robot path', 'obstacle avoidance for my robot', 'how do I generate smooth trajectories?', 'review my path planning code', 'sampling-based planning', 'grid-based pathfinding'."
 ---
 
 # robotics-path-planning instructions
@@ -77,16 +77,15 @@ Help users understand, implement, debug, and optimize path planning and motion p
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "This just needs a bigger search radius" | Bigger radii mask algorithmic mismatch. Use the skill. |
-| "I'll just increase the collision buffer" | Over-inflation causes false negatives and missed paths. Use the skill. |
-| "A* always finds the optimal path" | A* is optimal only with admissible heuristics and correct graph representation. Use the skill. |
-| "RRT is too random to be useful" | RRT converges probabilistically and can be guided with goal biasing. Use the skill. |
-| "The path looks fine in simulation" | Simulated collision detection often differs from reality. Use the skill. |
-| "I can just smooth the path after planning" | Post-hoc smoothing may violate constraints and cause collisions. Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Expanding step size or search radius when no feasible path is found | Larger parameters mask algorithmic mismatch between state-space complexity and planner capability | Diagnose whether the failure is narrow passages, high dimensionality, or disconnected configuration space; select a planner suited to the actual problem |
+| Inflating the collision buffer uniformly to guarantee safety | Over-inflation creates infeasible planning problems in constrained environments and wastes usable workspace | Use anisotropic inflation aligned with robot velocity direction; derive buffer size from localization uncertainty and dynamic constraints |
+| Trusting A* to find optimal paths without verifying the heuristic | A* is optimal only with admissible and consistent heuristics; inadmissible heuristics produce suboptimal or incorrect paths | Verify heuristic admissibility analytically; benchmark against ground-truth optimal solutions on representative environments |
+| Dismissing RRT as too random to be reliable | RRT converges probabilistically with theoretical completeness guarantees; goal biasing and informed variants improve convergence speed substantially | Configure goal biasing (10–30%), use RRT* for asymptotic optimality, or Informed RRT* for faster convergence in known configuration spaces |
+| Assuming simulation collision detection results match real deployment | Simulated obstacle geometry, inflation layers, and sensor noise models rarely match field conditions exactly | Validate planned paths on the physical robot with conservative safety margins; run hardware-in-the-loop tests before operational deployment |
+| Applying post-hoc path smoothing without re-checking constraints | Smoothed paths can cut through obstacles or violate dynamic constraints if not re-verified after geometric modification | Re-run collision checking at full resolution after any smoothing step; use constraint-aware optimization-based smoothers (CHOMP, STOMP) |
+| Ignoring kinodynamic constraints when evaluating planned trajectories | A geometrically valid path may be dynamically infeasible for robots with velocity, acceleration, jerk, or curvature limits | Incorporate robot dynamics into the planning state space or apply a trajectory optimizer with explicit kinodynamic constraint enforcement |
 
 ## Skill Boundaries
 

@@ -1,5 +1,5 @@
 ---
-description: "Use this agent when the user asks for help with Python code, debugging, optimization, or best practices.\n\nTrigger phrases include:\n- 'help me debug this Python code'\n- 'review my Python implementation'\n- 'how do I optimize this?'\n- 'what's the Pythonic way to do this?'\n- 'my Python script is slow'\n- 'I'm getting this Python error'\n- 'what library should I use for...'\n- 'check my Python code for issues'\n- 'is this the best approach?'\n- 'help me refactor this'\n\nExamples:\n- User pastes Python code and says 'can you review this for me?' → invoke this agent to analyze for bugs, inefficiency, and best practices\n- User says 'my script is running slowly, how can I optimize it?' → invoke this agent to profile, identify bottlenecks, and recommend optimizations\n- User asks 'what's the Pythonic way to handle this case?' → invoke this agent to explain idiomatic Python patterns and provide recommendations\n- During code debugging, user says 'why is this throwing a KeyError?' → invoke this agent to diagnose the issue and provide solutions\n- User asks 'should I use threading or asyncio for this task?' → invoke this agent to evaluate trade-offs and recommend the best approach"
+description: "Use when the user asks for help with Python code, debugging, optimization, or best practices. Trigger phrases: 'help me debug this Python code', 'review my Python implementation', 'how do I optimize this?', 'what', 'my Python script is slow', 'I', 'what library should I use for...', 'check my Python code for issues', 'is this the best approach?', 'help me refactor this'."
 name: python-expert
 ---
 
@@ -82,6 +82,19 @@ Edge cases and special considerations:
 - Optimize only after identifying actual bottlenecks
 - Consider maintenance burden of complex optimizations
 - Explain when micro-optimizations don't matter
+
+## Red Flags
+
+| Symptom | Why It's Wrong | What To Do Instead |
+|---------|----------------|-------------------|
+| Mutable default arguments (`def foo(a=[])`) | Shared state across calls, subtle bugs | Use `None` as default; initialize inside function |
+| Bare `except:` clauses | Catches `KeyboardInterrupt`, `SystemExit`, masks bugs | Catch specific exceptions only |
+| `eval()` or `exec()` on untrusted input | Remote code execution vulnerability | Use `ast.literal_eval`, safe parsing libraries |
+| Hardcoded credentials in source | Security breach, credential rotation pain | Use environment variables, secret managers |
+| No type hints on public APIs | Harder to maintain, more bugs | Add type hints; run `mypy` |
+| Ignoring return values from file/network ops | Silent data loss, resource leaks | Always check results; use context managers |
+| `is` for equality checks (`a is b` for ints/strings) | Relies on implementation caching, fragile | Use `==` for value comparison |
+| Circular imports | Runtime import errors, brittle architecture | Refactor shared code into separate module |
 
 **Common Python gotchas:**
 - Mutable default arguments

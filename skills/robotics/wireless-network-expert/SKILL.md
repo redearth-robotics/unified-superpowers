@@ -1,23 +1,6 @@
 ---
-description: "Use this agent when the user asks to design, configure, or troubleshoot wireless networks for robotics systems.
-
-Trigger phrases include:
-- 'wireless for robots'
-- 'RF planning'
-- 'mesh network setup'
-- 'WiFi for robots'
-- 'wireless protocol selection'
-- 'RF interference for robotics'
-- 'robot roaming and handoff'
-- 'wireless security for robots'
-
-Examples:
-- User says 'Plan the WiFi coverage for our autonomous mobile robots in the warehouse' → invoke this agent to design RF coverage and roaming
-- User asks 'Should we use LoRa or WiFi for our outdoor robot fleet?' → invoke this agent to compare wireless protocols
-- User says 'Set up a mesh network for our swarm robots' → invoke this agent to design and configure mesh topology
-- User asks 'How do we secure wireless communication between robots and the base station?' → invoke this agent to implement wireless security"
 name: wireless-network-expert
-tools: ['shell', 'read', 'search', 'edit', 'task', 'skill', 'web_search', 'web_fetch', 'ask_user']
+description: "Use when the user asks to design, configure, or troubleshoot wireless networks for robotics systems. Trigger phrases: 'wireless for robots', 'RF planning', 'mesh network setup', 'WiFi for robots', 'wireless protocol selection', 'RF interference for robotics', 'robot roaming and handoff', 'wireless security for robots'."
 ---
 
 # wireless-network-expert instructions
@@ -74,16 +57,15 @@ Decision-Making Framework:
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "WiFi works the same for robots as for laptops" | Robot WiFi needs roaming, deterministic latency, and RF planning in industrial environments. Use the skill. |
-| "Just add more access points" | More APs can increase interference and roaming problems without proper planning. Use the skill. |
-| "Wireless security is the same as wired" | Open-air signals are interceptable; robot control channels need strong encryption and authentication. Use the skill. |
-| "Any wireless protocol will work" | Range, bandwidth, latency, and power vary wildly across protocols. Use the skill. |
-| "RF planning is optional" | Without RF planning, robots will hit dead zones and drop control links. Use the skill. |
-| "Mesh networks are plug-and-play" | Mesh routing, channel planning, and congestion control need careful design. Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Deploying APs at maximum transmit power to maximize coverage | High transmit power causes near-far interference and prevents distant APs from hearing weaker clients, collapsing network capacity | Set AP transmit power to match the required cell size and validate with a post-deployment site survey |
+| Using 2.4 GHz WiFi because it "has better range" | 2.4 GHz has only three non-overlapping channels and is saturated with interference from other devices in industrial environments | Use 5 GHz for robot control links; reserve 2.4 GHz only for legacy devices that explicitly require it |
+| Triggering roaming decisions on RSSI alone | RSSI varies wildly in industrial environments with metal reflections; a high-RSSI AP may actually be far away while a lower-RSSI AP is physically closer | Configure roaming on SNR and packet loss metrics; use 802.11r fast BSS transition to cut handoff latency below 50 ms |
+| Skipping interference testing because the spectrum "looks clean" on a passive scan | Industrial motors, arc welders, and microwave ovens generate transient interference invisible to passive scanning but fatal to a live control link | Run active interference tests under full production operating conditions including all machinery running simultaneously |
+| Choosing a mesh protocol based on marketing throughput specifications | Advertised mesh throughput assumes ideal RF conditions; real industrial environments with multipath and interference deliver a fraction of that figure | Benchmark the mesh protocol in the actual environment under realistic load and verify end-to-end latency meets the robot control requirement |
+| Using WPA2-PSK with a single shared key across the entire robot fleet | A single compromised robot exposes every robot on the network; a leaked PSK lets anyone join the control network | Deploy WPA3-Enterprise with per-robot certificates so a credential breach affects only the individual compromised device |
+| Placing APs for geometric coverage uniformity without considering robot travel paths | Coverage holes at path intersections and loading docks cause mid-mission handoff failures even when the overall heatmap looks adequate | Conduct a path-aware site survey following actual robot routes and validate handoff at every transition point |
 
 ## Skill Boundaries
 

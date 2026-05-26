@@ -1,5 +1,10 @@
+# Unified Superpowers Toolkit - Complete Skill List
+# Total: 100 skills across 4 domains
+# Updated: 2026-05-26
+
 [core/]
 brainstorming
+dispatching-parallel-agents
 executing-plans
 finishing-a-development-branch
 receiving-code-review
@@ -13,19 +18,25 @@ using-superpowers
 verification-before-completion
 writing-plans
 writing-skills
+# Core: 15 skills
 
 [languages/]
 cpp-expert
 cpp-misra-auditor
+data-pipeline-architect
+devops-engineer
 go-expert
 hunt-api-misconfig
 hunt-aspnet
 java-expert
 javascript-expert
+linux-ubuntu-expert
 matlab-expert
 python-expert
 rust-expert
+software-architect
 web-expert
+# Languages: 15 skills
 
 [robotics/]
 embedded-networking
@@ -46,6 +57,7 @@ robotics-superpowers
 robotics-vision-expert
 ros-robotics-expert
 wireless-network-expert
+# Robotics: 18 skills
 
 [security/]
 apk-redteam-pipeline
@@ -100,4 +112,5 @@ triage-validation
 vmware-vcenter-attack
 web2-recon
 web3-audit
+# Security: 52 skills
 

@@ -1,7 +1,6 @@
 ---
-description: "Use this agent when the user asks to build or review web interfaces, dashboards, real-time data visualizations, or full-stack web applications for robotics.\n\nTrigger phrases include:\n- 'build robot dashboard'\n- 'web interface for robot'\n- 'real-time web app'\n- 'robot UI'\n- 'telemetry dashboard'\n- 'visualize robot data'\n- 'responsive robot control panel'\n- 'monitoring UI for robots'\n\nExamples:\n- User says 'build me a dashboard to monitor my robot's battery and position' → invoke this agent to design the UI, choose components, and wire real-time data\n- User pastes frontend code and says 'this dashboard is laggy with high-frequency telemetry' → invoke this agent to optimize rendering, data buffering, and WebSocket handling\n- User asks 'how do I show real-time robot camera feed in a web app?' → invoke this agent to recommend WebRTC, MJPEG streaming, or WebSocket image frames\n- User says 'review my full-stack robot monitoring app' → invoke this agent to assess frontend, backend, real-time pipeline, and deployment architecture"
 name: web-expert
-tools: ['shell', 'read', 'search', 'edit', 'task', 'skill', 'web_search', 'web_fetch', 'ask_user']
+description: "Use when the user asks to build or review web interfaces, dashboards, real-time data visualizations, or full-stack web applications for robotics. Trigger phrases: 'build robot dashboard', 'web interface for robot', 'real-time web app', 'robot UI', 'telemetry dashboard', 'visualize robot data', 'responsive robot control panel', 'monitoring UI for robots'."
 ---
 
 # web-expert instructions
@@ -56,10 +55,10 @@ Methodology by task type:
 4. Offload heavy computation: Web Workers for data processing, OffscreenCanvas for rendering
 5. Implement backpressure: slow down data delivery if the UI can't keep up
 
-Red Flags table:
+## Red Flags
 
-| Red Flag | Why It Matters | What To Do |
-|----------|---------------|------------|
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
 | Updating React/Vue state on every WebSocket message | Causes re-render storms, dropped frames, high CPU | Buffer or throttle updates; batch state changes; use refs for ephemeral data |
 | No connection status or reconnection logic | Users don't know if data is stale or disconnected | Implement heartbeat, reconnection with exponential backoff, and visual status indicators |
 | Inline styles or `!important` everywhere | Unmaintainable, unpredictable cascade, hard to theme | Use CSS modules, Tailwind, or styled-components with consistent design tokens |

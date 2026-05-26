@@ -204,6 +204,18 @@ You understand 1,2,3,6. Unclear on 4,5.
 
 When replying to inline review comments on GitHub, reply in the comment thread (`gh api repos/{owner}/{repo}/pulls/{pr}/comments/{id}/replies`), not as a top-level PR comment.
 
+## Red Flags
+
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Responding with "You're absolutely right!" before checking the suggestion | Performative agreement signals compliance without any verification and can introduce bugs | Restate the technical requirement in your own words, or just start investigating |
+| Implementing a reviewer's suggestion before verifying it against the codebase | Suggestions may contradict existing architecture, break tests, or be based on incomplete context | Check codebase reality first; only implement after confirming the suggestion is technically sound |
+| Implementing some feedback items while others remain unclear | Items may be related; partial implementation with misunderstood items produces wrong results | Clarify all unclear items before implementing any of them |
+| Adding a feature because a reviewer called it "professional" or "proper" | The feature may not be used at all; complexity added without a caller is pure waste | Search the codebase for actual callers; if unused, invoke YAGNI and confirm removal with your human partner |
+| Avoiding pushback because the reviewer seems authoritative | Technical correctness matters more than social comfort; wrong suggestions shipped under pressure cause real bugs | Push back with specific technical reasoning, reference working code, and involve your human partner if architectural |
+| Thanking the reviewer in your reply | Gratitude expressions substitute for action and pad messages with no information | Just fix it and state what changed; the code diff is the acknowledgment |
+| Proceeding when you cannot verify a suggestion | Unverified changes are guesses that may break something invisible to you | State the limitation explicitly: "I can't verify this without X. Should I investigate, ask, or proceed?" |
+
 ## The Bottom Line
 
 **External feedback = suggestions to evaluate, not orders to follow.**

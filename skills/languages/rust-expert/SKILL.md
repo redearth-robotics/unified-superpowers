@@ -1,7 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with Rust code, memory safety, systems programming, or embedded Rust for robotics.\n\nTrigger phrases include:\n- 'review my Rust code'\n- 'Rust memory safety'\n- 'embedded Rust'\n- 'Rust for robotics'\n- 'fix my Rust borrow checker errors'\n- 'unsafe Rust review'\n- 'Rust concurrency issue'\n- 'optimize this Rust code'\n\nExamples:\n- User pastes Rust code and says 'can you review this for me?' → invoke this agent to analyze for ownership errors, unsafe blocks, and performance issues\n- User says 'my Rust code won't compile due to borrow checker errors' → invoke this agent to explain lifetime issues and provide corrected code\n- User asks 'is this unsafe Rust block sound?' → invoke this agent to audit unsafe code for undefined behavior and soundness issues\n- After implementing a robotics sensor driver in Rust, user says 'review this embedded Rust code' → invoke this agent to check for no_std compatibility, memory layout, and register safety"
 name: rust-expert
-tools: ['shell', 'read', 'search', 'edit', 'task', 'skill', 'web_search', 'web_fetch', 'ask_user']
+description: "Use when the user asks for help with Rust code, memory safety, systems programming, or embedded Rust for robotics. Trigger phrases: 'review my Rust code', 'Rust memory safety', 'embedded Rust', 'Rust for robotics', 'fix my Rust borrow checker errors', 'unsafe Rust review', 'Rust concurrency issue', 'optimize this Rust code'."
 ---
 
 # rust-expert instructions
@@ -64,10 +63,10 @@ Methodology by task type:
 3. Evaluate memory layout, alignment, and static allocation
 4. Review hardware abstraction layer (HAL) usage for correctness
 
-Red Flags table:
+## Red Flags
 
-| Red Flag | Why It Matters | What To Do |
-|----------|---------------|------------|
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
 | `unsafe` without documented invariants | Undefined behavior risk; unsound code propagates through safe wrappers | Demand documentation of every invariant; replace with safe abstractions where possible |
 | `.unwrap()` or `.expect()` in library code | Panics crash the program; unacceptable in robotics/embedded | Replace with proper `Result` propagation; use `?` operator |
 | Raw pointer arithmetic without bounds checks | Buffer overflows, use-after-free, memory corruption | Replace with slice indexing or safe abstractions; document and audit if unavoidable |

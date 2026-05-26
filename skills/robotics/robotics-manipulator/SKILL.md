@@ -1,6 +1,6 @@
 ---
-description: "Use this agent when the user asks for help with robotic arms, manipulators, inverse kinematics, grasp planning, or arm control including IK solvers, grasp detection, arm dynamics, and collision-free manipulation.\n\nTrigger phrases include:\n- 'inverse kinematics for arm'\n- 'grasp planning'\n- 'manipulator control'\n- 'robotic arm programming'\n- 'help me control my robotic arm'\n- 'my arm is not reaching the target'\n- 'how do I plan grasps?'\n- 'review my IK solver'\n- 'arm trajectory planning'\n- 'manipulator collision avoidance'\n- 'joint limit issues'\n- 'end-effector pose control'\n- 'gripper control and grasping'\n- 'MoveIt configuration issues'\n\nExamples:\n- User says 'My robotic arm misses the target position, how do I fix the IK?' → invoke this agent to diagnose IK formulation and solver issues\n- User asks 'How do I plan collision-free paths for my 6-DOF arm?' → invoke this agent to recommend planning frameworks and constraint handling\n- User shows code and says 'Review my Jacobian-based controller for stability issues' → invoke this agent to analyze the control law and singularity handling\n- User asks 'What grasp strategy should I use for unknown objects?' → invoke this agent for grasp detection and planning guidance\n- During debugging, user says 'My arm vibrates near singularities' → invoke this agent to analyze Jacobian conditioning and redundancy resolution"
 name: robotics-manipulator
+description: "Use when the user asks for help with robotic arms, manipulators, inverse kinematics, grasp planning, or arm control including IK solvers, grasp detection, arm dynamics, and collision-free manipulation. Trigger phrases: 'inverse kinematics for arm', 'grasp planning', 'manipulator control', 'robotic arm programming', 'help me control my robotic arm', 'my arm is not reaching the target', 'how do I plan grasps?', 'review my IK solver', 'arm trajectory planning', 'manipulator collision avoidance'."
 ---
 
 # robotics-manipulator instructions
@@ -78,16 +78,15 @@ Help users understand, implement, debug, and optimize robotic manipulator system
 
 ## Red Flags
 
-These thoughts mean STOP — you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "This is just a PID tuning problem" | PID alone cannot fix kinematic or structural issues. Use the skill. |
-| "I'll just use the pseudoinverse" | Plain pseudoinverse fails at singularities and ignores joint limits. Use the skill. |
-| "The arm should reach any point in its workspace" | Workspace is pose-dependent; orientation constraints reduce reachable set. Use the skill. |
-| "Grasping is just about closing the gripper" | Successful grasping requires contact analysis, force closure, and object modeling. Use the skill. |
-| "I can fix this with higher control gains" | Higher gains amplify noise and excite resonances. Use the skill. |
-| "IK solvers are interchangeable" | Different solvers handle constraints, redundancy, and singularities differently. Use the skill. |
+| Symptom | Why It's Wrong | What To Do Instead |
+|---|---|---|
+| Attempting to fix arm tracking errors by tuning PID gains alone | PID cannot compensate for kinematic model errors, joint flexibility, unmodeled friction, or structural resonances | Diagnose whether the error is kinematic (IK accuracy), dynamic (torque model mismatch), or control (gain tuning) before adjusting any parameter |
+| Using the plain Moore-Penrose pseudoinverse as the IK solution | The standard pseudoinverse produces unbounded joint velocities near singularities and ignores joint position and velocity limits | Use damped least squares (DLS) with a variable damping factor; add null-space joint limit avoidance as a secondary objective |
+| Assuming the arm workspace is a simple reachable sphere or volume | The reachable workspace is a complex manifold; orientation constraints and joint limits further reduce the valid Cartesian set | Compute the dexterous workspace explicitly; verify reachability including full orientation degrees of freedom for each target pose |
+| Treating grasping as a binary close-gripper operation | Successful grasping requires verified force closure, correct contact geometry, object mass/friction properties, and slip detection | Analyze grasp stability using force closure metrics; integrate force/torque sensing and tactile feedback for robust grasp execution |
+| Raising control gains to reduce steady-state or dynamic tracking error | Higher gains amplify joint encoder noise, excite structural resonances, and reduce stability margins | Identify the noise floor and structural resonant frequencies; add model-based feedforward torque to reduce error without raising feedback gains |
+| Treating IK solvers as equivalent and interchangeable tools | Solvers differ fundamentally in singularity handling, constraint satisfaction, redundancy resolution, seed sensitivity, and computation speed | Select solvers based on requirements: analytical (maximum speed), numerical Jacobian (generality), TRAC-IK (reliability across configurations) |
+| Neglecting tool frame calibration when changing or reinstalling end-effectors | An incorrect TCP frame propagates constant position and orientation offsets into every Cartesian command and visual servoing target | Perform tool frame calibration after each end-effector change; validate against a physical reference fixture before resuming operations |
 
 ## Skill Boundaries
 

@@ -1,8 +1,8 @@
 # Skill Catalog
 
-Complete listing of all 95 skills in the Unified Superpowers Toolkit, organized by domain.
+Complete listing of all 100 skills in the Unified Superpowers Toolkit, organized by domain.
 
-## Core Process Skills (14)
+## Core Process Skills (15)
 
 - `brainstorming` — Design and specification creation
 - `systematic-debugging` — Structured bug investigation
@@ -12,6 +12,7 @@ Complete listing of all 95 skills in the Unified Superpowers Toolkit, organized 
 - `writing-plans` — Implementation plan creation
 - `writing-skills` — Skill development best practices
 - `subagent-driven-development` — Parallel task execution
+- `dispatching-parallel-agents` — Multi-agent coordination
 - `executing-plans` — Plan execution with checkpoints
 - `finishing-a-development-branch` — Branch completion workflow
 - `requesting-code-review` — Code review requests
@@ -95,7 +96,7 @@ Complete listing of all 95 skills in the Unified Superpowers Toolkit, organized 
 - `network-engineer` — Network configuration
 - `wireless-network-expert` — Wireless communication
 
-## Language Skills (11)
+## Language Skills (15)
 
 - `python-expert` — Python debugging and optimization
 - `cpp-expert` — C++ review and best practices
@@ -106,9 +107,13 @@ Complete listing of all 95 skills in the Unified Superpowers Toolkit, organized 
 - `go-expert` — Go programming
 - `matlab-expert` — MATLAB and Simulink
 - `web-expert` — Web development
+- `data-pipeline-architect` — Data pipeline design and optimization
+- `devops-engineer` — DevOps and CI/CD best practices
+- `linux-ubuntu-expert` — Linux/Ubuntu system administration
+- `software-architect` — Software architecture and design
 - `hunt-api-misconfig` — API security (language-agnostic)
 - `hunt-aspnet` — ASP.NET security
 
 ---
 
-**Total: 95 skills across 4 domains**
+**Total: 100 skills across 4 domains**
