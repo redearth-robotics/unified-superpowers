@@ -150,11 +150,22 @@ I'll analyze the performance bottlenecks and suggest optimizations:
 
 ## 🔧 Installation & Setup
 
-### Prerequisites
-- Git
-- Your AI assistant environment (Devin, Claude Code, etc.)
+### Quick Install (Recommended)
 
-### Installation Steps
+Use the provided installation scripts for easy setup:
+
+```bash
+# Universal installer (auto-detects platform)
+./scripts/install-universal.sh
+
+# Or use platform-specific scripts
+./scripts/install.sh          # Linux/macOS
+python3 scripts/install.py     # Cross-platform Python
+```
+
+For detailed installation options, see [INSTALLATION.md](INSTALLATION.md).
+
+### Manual Installation
 
 1. **Clone the repository**
 ```bash
@@ -190,6 +201,20 @@ find skills -name "SKILL.md" | wc -l
 **Other Platforms:**
 - Consult your platform's documentation for skill integration
 - Most platforms support auto-discovery from `skills/` directories
+
+### Installation Script Options
+
+All installation scripts support:
+- `-d, --directory DIR` - Custom installation directory
+- `-y, --yes` - Automated mode (no prompts)
+- `--skip-deps` - Skip dependency checks
+- `-v, --verbose` - Verbose output
+- `-h, --help` - Show help message
+
+Example:
+```bash
+./scripts/install.sh -d ~/my-skills --yes
+```
 
 ## 📚 Skill Catalog
 
