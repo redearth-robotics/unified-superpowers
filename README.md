@@ -8,7 +8,7 @@ This is a curated integration of skills from three sources:
 - **[Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter)** — 52 security skills. Built from real engagements with 681 disclosed vulnerability reports.
 - **[robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers)** — 33 robotics and language skills. ROS, sensor fusion, localization, plus Python, C++, Rust, JavaScript, and more.
 
-Total: 100 skills.
+Total: 101 skills.
 
 ## Quick Start
 
@@ -38,7 +38,7 @@ find skills -name "SKILL.md" | wc -l
 | Security | 52 | 28 hunt modules, bug bounty, pentesting, OSINT |
 | Robotics | 18 | ROS, GPS/INS fusion, SLAM, embedded systems |
 | Languages | 15 | Python, C++, Rust, JavaScript, MATLAB, DevOps, Linux |
-| Core Process | 15 | Debugging, TDD, planning, code review, parallel agents |
+| Core Process | 16 | Debugging, TDD, planning, code review, parallel agents, framework orchestration |
 
 See [SKILL_CATALOG.md](SKILL_CATALOG.md) for the full list.
 

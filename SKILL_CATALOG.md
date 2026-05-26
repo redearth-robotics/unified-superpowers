@@ -1,10 +1,11 @@
 # Skill Catalog
 
-Complete listing of all 100 skills in the Unified Superpowers Toolkit, organized by domain.
+Complete listing of all 101 skills in the Unified Superpowers Toolkit, organized by domain.
 
-## Core Process Skills (15)
+## Core Process Skills (16)
 
 - `brainstorming` — Design and specification creation
+- `framework-orchestrator` — Automatic behavioral framework selection and composition
 - `systematic-debugging` — Structured bug investigation
 - `test-driven-development` — TDD methodology
 - `token-optimizer` — Token-efficient AI interactions
@@ -116,4 +117,4 @@ Complete listing of all 100 skills in the Unified Superpowers Toolkit, organized
 
 ---
 
-**Total: 100 skills across 4 domains**
+**Total: 101 skills across 4 domains**

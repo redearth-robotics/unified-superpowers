@@ -4,12 +4,13 @@
   "description": "Combined security testing and robotics engineering skillset",
   "domains": {
     "core": {
-      "count": 15,
+      "count": 16,
       "skills": [
         "brainstorming",
         "dispatching-parallel-agents",
         "executing-plans",
         "finishing-a-development-branch",
+        "framework-orchestrator",
         "receiving-code-review",
         "requesting-code-review",
         "subagent-driven-development",
@@ -124,7 +125,7 @@
       ]
     }
   },
-  "total_skills": 100,
+  "total_skills": 101,
   "sources": [
     {
       "name": "Claude-BugHunter",
