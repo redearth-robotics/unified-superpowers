@@ -6,6 +6,7 @@ param(
     [string]$Url = "git@github.com:RedEarth-Robotics/unified-superpowers.git",
     [switch]$Yes,
     [switch]$SkipDeps,
+    [switch]$NoPlatforms,
     [switch]$Verbose
 )
 
@@ -170,6 +171,51 @@ function Install-Toolkit {
     }
     finally {
         Pop-Location
+    }
+
+    # Install to platform directories
+    if (-not $NoPlatforms) {
+        Write-Info "Installing skills to platform directories..."
+        
+        # Platform directories
+        $platformDirs = @(
+            "$env:USERPROFILE\.claude",
+            "$env:USERPROFILE\.opencode",
+            "$env:USERPROFILE\.devin",
+            "$env:USERPROFILE\.codeium",
+            "$env:USERPROFILE\.codex",
+            "$env:USERPROFILE\.copilot"
+        )
+        
+        foreach ($platformDir in $platformDirs) {
+            try {
+                if (-not (Test-Path $platformDir)) {
+                    New-Item -ItemType Directory -Path $platformDir -Force | Out-Null
+                }
+                
+                $skillsDir = Join-Path $platformDir "skills"
+                if (-not (Test-Path $skillsDir)) {
+                    New-Item -ItemType Directory -Path $skillsDir -Force | Out-Null
+                }
+                
+                Write-Verbose "Installing to $platformDir"
+                
+                # Copy skills to platform directory
+                $sourceSkills = Join-Path $Directory "skills"
+                Get-ChildItem -Path $sourceSkills -Directory | ForEach-Object {
+                    $dest = Join-Path $skillsDir $_.Name
+                    if (Test-Path $dest) {
+                        Remove-Item -Path $dest -Recurse -Force
+                    }
+                    Copy-Item -Path $_.FullName -Destination $dest -Recurse -Force
+                }
+                
+                Write-Success "Installed to $platformDir"
+            }
+            catch {
+                Write-Warning "Failed to install to $platformDir: $_"
+            }
+        }
     }
 
     # Show summary

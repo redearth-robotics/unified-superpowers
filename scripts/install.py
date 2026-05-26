@@ -26,6 +26,7 @@ class Installer:
         self.interactive = True
         self.skip_deps = False
         self.verbose = False
+        self.do_platform_install = True
 
     def log_info(self, message):
         print(f"{Colors.BLUE}[INFO]{Colors.NC} {message}")
@@ -137,6 +138,45 @@ class Installer:
             self.log_warning(f"Expected 95 skills, found {skill_count}")
             return False
 
+    def install_to_platform_directories(self):
+        """Install skills to platform-specific directories"""
+        if not self.do_platform_install:
+            self.log_warning("Skipping platform-specific installation")
+            return
+
+        self.log_info("Installing skills to platform directories...")
+
+        # Platform directories
+        platform_dirs = [
+            Path.home() / ".claude",
+            Path.home() / ".opencode",
+            Path.home() / ".devin",
+            Path.home() / ".codeium",
+            Path.home() / ".codex",
+            Path.home() / ".copilot",
+        ]
+
+        for platform_dir in platform_dirs:
+            try:
+                platform_dir.mkdir(parents=True, exist_ok=True)
+                skills_dir = platform_dir / "skills"
+                skills_dir.mkdir(exist_ok=True)
+
+                self.log_verbose(f"Installing to {platform_dir}")
+
+                # Copy skills to platform directory
+                import shutil
+                for skill_subdir in self.install_dir.glob("skills/*"):
+                    if skill_subdir.is_dir():
+                        dest = skills_dir / skill_subdir.name
+                        if dest.exists():
+                            shutil.rmtree(dest)
+                        shutil.copytree(skill_subdir, dest)
+
+                self.log_success(f"Installed to {platform_dir}")
+            except Exception as e:
+                self.log_warning(f"Failed to install to {platform_dir}: {e}")
+
     def print_summary(self):
         """Print installation summary"""
         print()
@@ -182,6 +222,9 @@ class Installer:
         # Verify installation
         self.verify_installation()
 
+        # Install to platform directories
+        self.install_to_platform_directories()
+
         # Print summary
         self.print_summary()
         return True
@@ -211,6 +254,11 @@ def main():
         help='Skip dependency checks'
     )
     parser.add_argument(
+        '--no-platforms',
+        action='store_true',
+        help='Skip platform-specific installation'
+    )
+    parser.add_argument(
         '-v', '--verbose',
         action='store_true',
         help='Verbose output'
@@ -223,6 +271,7 @@ def main():
     installer.repo_url = args.url
     installer.interactive = not args.yes
     installer.skip_deps = args.skip_deps
+    installer.do_platform_install = not args.no_platforms
     installer.verbose = args.verbose
 
     success = installer.install()

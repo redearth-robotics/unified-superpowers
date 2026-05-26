@@ -18,6 +18,7 @@ INSTALL_DIR="./unified-superpowers"
 INTERACTIVE=true
 SKIP_DEPENDENCIES=false
 VERBOSE=false
+DO_PLATFORM_INSTALL=true
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -38,6 +39,10 @@ while [[ $# -gt 0 ]]; do
             SKIP_DEPENDENCIES=true
             shift
             ;;
+        --no-platforms)
+            DO_PLATFORM_INSTALL=false
+            shift
+            ;;
         -v|--verbose)
             VERBOSE=true
             shift
@@ -50,6 +55,7 @@ while [[ $# -gt 0 ]]; do
             echo "  -u, --url URL          Repository URL (default: git@github.com:RedEarth-Robotics/unified-superpowers.git)"
             echo "  -y, --yes              Automated mode (no prompts)"
             echo "  --skip-deps           Skip dependency checks"
+            echo "  --no-platforms        Skip platform-specific installation"
             echo "  -v, --verbose          Verbose output"
             echo "  -h, --help             Show this help message"
             exit 0
@@ -179,6 +185,36 @@ install_toolkit() {
         log_success "Installation verified: $SKILL_COUNT skills found"
     else
         log_warning "Expected 95 skills, found $SKILL_COUNT"
+    fi
+
+    # Install to platform-specific directories
+    if [ "$DO_PLATFORM_INSTALL" = true ]; then
+        log_info "Installing skills to platform directories..."
+        
+        # Platform directories
+        PLATFORM_DIRS=(
+            "$HOME/.claude"
+            "$HOME/.opencode"
+            "$HOME/.devin"
+            "$HOME/.codeium"
+            "$HOME/.codex"
+            "$HOME/.copilot"
+        )
+        
+        for platform_dir in "${PLATFORM_DIRS[@]}"; do
+            if [ -d "$platform_dir" ] || mkdir -p "$platform_dir" 2>/dev/null; then
+                log_verbose "Installing to $platform_dir"
+                # Copy skills to platform directory
+                cp -r skills/* "$platform_dir/skills/" 2>/dev/null || true
+                if [ $? -eq 0 ]; then
+                    log_success "Installed to $platform_dir"
+                else
+                    log_warning "Failed to install to $platform_dir"
+                fi
+            else
+                log_warning "Could not create/access $platform_dir"
+            fi
+        done
     fi
 
     # Show summary

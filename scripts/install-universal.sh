@@ -4,6 +4,32 @@
 
 set -e
 
+# Parse arguments
+SKIP_DEPS=false
+NO_PLATFORMS=false
+VERBOSE=false
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --skip-deps)
+            SKIP_DEPS=true
+            shift
+            ;;
+        --no-platforms)
+            NO_PLATFORMS=true
+            shift
+            ;;
+        -v|--verbose)
+            VERBOSE=true
+            shift
+            ;;
+        *)
+            # Pass other arguments to the installer
+            break
+            ;;
+    esac
+done
+
 # Detect platform
 detect_platform() {
     case "$(uname -s)" in
@@ -38,7 +64,11 @@ main() {
     # Try Python script first (most universal)
     if [ -n "$PYTHON" ]; then
         echo "Using Python installer..."
-        exec "$PYTHON" "$(dirname "$0")/install.py" "$@"
+        ARGS=""
+        [ "$SKIP_DEPS" = true ] && ARGS="$ARGS --skip-deps"
+        [ "$NO_PLATFORMS" = true ] && ARGS="$ARGS --no-platforms"
+        [ "$VERBOSE" = true ] && ARGS="$ARGS --verbose"
+        exec "$PYTHON" "$(dirname "$0")/install.py" $ARGS "$@"
     fi
 
     # Fall back to platform-specific scripts
@@ -46,7 +76,11 @@ main() {
         linux|macos)
             if [ -f "$(dirname "$0")/install.sh" ]; then
                 echo "Using Bash installer..."
-                exec "$(dirname "$0")/install.sh" "$@"
+                ARGS=""
+                [ "$SKIP_DEPS" = true ] && ARGS="$ARGS --skip-deps"
+                [ "$NO_PLATFORMS" = true ] && ARGS="$ARGS --no-platforms"
+                [ "$VERBOSE" = true ] && ARGS="$ARGS --verbose"
+                exec "$(dirname "$0")/install.sh" $ARGS "$@"
             else
                 echo "Error: No suitable installer found for this platform"
                 exit 1
@@ -55,7 +89,11 @@ main() {
         windows)
             if command -v powershell &> /dev/null; then
                 echo "Using PowerShell installer..."
-                powershell -ExecutionPolicy Bypass -File "$(dirname "$0")/install.ps1" "$@"
+                ARGS=""
+                [ "$SKIP_DEPS" = true ] && ARGS="$ARGS -SkipDeps"
+                [ "$NO_PLATFORMS" = true ] && ARGS="$ARGS -NoPlatforms"
+                [ "$VERBOSE" = true ] && ARGS="$ARGS -Verbose"
+                powershell -ExecutionPolicy Bypass -File "$(dirname "$0")/install.ps1" $ARGS "$@"
             else
                 echo "Error: PowerShell not found"
                 exit 1
