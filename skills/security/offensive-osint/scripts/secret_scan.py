@@ -28,7 +28,7 @@ SEV_LOW = "low"
 PATTERNS = [
     # AWS
     ("AWS_ACCESS_KEY",       SEV_CRITICAL, "aws",         r"\b(AKIA|ASIA)[0-9A-Z]{16}\b"),
-    ("AWS_SECRET_TYPED",     SEV_CRITICAL, "aws",         r"(?i)aws[_\-]?secret[_\-]?access[_\-]?key['\"\s:=]+([A-Za-z0-9/+=]{40})"),
+    ("AWS_SECRET_TYPED",     SEV_CRITICAL, "aws",         r"(?i)aws[_\-]?secret[_\-]?access[_\-]?key['\"\s:=]+[A-Za-z0-9/+=]{40}"),
     ("AWS_SECRET_LOOSE",     SEV_HIGH,     "aws",         r"(?i)aws(.{0,20})?(secret|sk)[\"'=: ]+([0-9a-z/+=]{40})"),
 
     # Google Cloud Platform
@@ -77,7 +77,7 @@ PATTERNS = [
     ("GENERIC_PRIVKEY",      SEV_CRITICAL, "private_key", r"-----BEGIN (DSA |PGP |)PRIVATE KEY-----"),
 
     # Generic
-    ("GENERIC_API_KEY",      SEV_MEDIUM,   "generic",     r"(?i)(?:api[_\-]?key|apikey|api_secret|access_token|secret[_\-]?token)['\"\s:=]+[\"']([A-Za-z0-9+/=_\-]{24,})[\"']"),
+    ("GENERIC_API_KEY",      SEV_MEDIUM,   "generic",     r"(?i)(?:api[_\-]?key|apikey|api_secret|access_token|secret[_\-]?token)['\"\s:=]+[\"'][A-Za-z0-9+/=_\-]{24,}[\"']"),
 
     # Modern AI APIs (v2.1)
     ("ANTHROPIC_API",        SEV_CRITICAL, "ai_api",      r"\bsk-ant-(?:api03|admin01)-[A-Za-z0-9_\-]{93,}\b"),
@@ -130,6 +130,16 @@ def scan_text(text: str, source: str = "<stdin>"):
                 }
 
 
+def is_binary_file(path: str) -> bool:
+    """Check if a file is binary by reading the first 1024 bytes."""
+    try:
+        with open(path, 'rb') as f:
+            chunk = f.read(1024)
+            return b'\x00' in chunk
+    except (OSError, IOError):
+        return True
+
+
 def scan_path(path: str):
     """Recursively scan a file or directory."""
     if os.path.isdir(path):
@@ -144,6 +154,8 @@ def scan_path(path: str):
     try:
         # Skip large binary files (>10MB)
         if os.path.getsize(path) > 10 * 1024 * 1024:
+            return
+        if is_binary_file(path):
             return
         with open(path, "r", errors="replace") as fh:
             yield from scan_text(fh.read(), source=path)

@@ -1,25 +1,34 @@
 (function() {
-  const WS_URL = 'ws://' + window.location.host;
+  const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host;
   let ws = null;
   let eventQueue = [];
+  const MAX_QUEUE_SIZE = 100;
+  let reconnectAttempts = 0;
 
   function connect() {
     ws = new WebSocket(WS_URL);
 
     ws.onopen = () => {
+      reconnectAttempts = 0;
       eventQueue.forEach(e => ws.send(JSON.stringify(e)));
       eventQueue = [];
     };
 
     ws.onmessage = (msg) => {
-      const data = JSON.parse(msg.data);
-      if (data.type === 'reload') {
-        window.location.reload();
+      try {
+        const data = JSON.parse(msg.data);
+        if (data.type === 'reload') {
+          window.location.reload();
+        }
+      } catch (e) {
+        console.error('Failed to parse WebSocket message:', e);
       }
     };
 
     ws.onclose = () => {
-      setTimeout(connect, 1000);
+      const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
+      reconnectAttempts++;
+      setTimeout(connect, delay);
     };
   }
 
@@ -28,6 +37,9 @@
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify(event));
     } else {
+      if (eventQueue.length >= MAX_QUEUE_SIZE) {
+        eventQueue.shift();
+      }
       eventQueue.push(event);
     }
   }
@@ -53,7 +65,7 @@
       if (selected.length === 0) {
         indicator.textContent = 'Click an option above, then return to the terminal';
       } else if (selected.length === 1) {
-        const label = selected[0].querySelector('h3, .content h3, .card-body h3')?.textContent?.trim() || selected[0].dataset.choice;
+        const label = selected[0]?.querySelector('h3, .content h3, .card-body h3')?.textContent?.trim() || selected[0]?.dataset.choice || 'Unknown';
         indicator.innerHTML = '<span class="selected-text">' + label + ' selected</span> — return to terminal to continue';
       } else {
         indicator.innerHTML = '<span class="selected-text">' + selected.length + ' selected</span> — return to terminal to continue';

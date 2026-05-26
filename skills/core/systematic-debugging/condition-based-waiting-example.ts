@@ -12,7 +12,9 @@ import type { LaceEvent, LaceEventType } from '~/threads/types';
  * @param threadId - Thread to check for events
  * @param eventType - Type of event to wait for
  * @param timeoutMs - Maximum time to wait (default 5000ms)
+ * @param pollIntervalMs - Polling interval in milliseconds (default 10ms)
  * @returns Promise resolving to the first matching event
+ * @throws Error if timeout is reached before event is found, or if inputs are invalid
  *
  * Example:
  *   await waitForEvent(threadManager, agentThreadId, 'TOOL_RESULT');
@@ -21,25 +23,47 @@ export function waitForEvent(
   threadManager: ThreadManager,
   threadId: string,
   eventType: LaceEventType,
-  timeoutMs = 5000
+  timeoutMs = 5000,
+  pollIntervalMs = 10
 ): Promise<LaceEvent> {
+  if (!threadManager) {
+    return Promise.reject(new Error('threadManager is required'));
+  }
+  if (!threadId || typeof threadId !== 'string') {
+    return Promise.reject(new Error('threadId must be a non-empty string'));
+  }
+  if (timeoutMs <= 0) {
+    return Promise.reject(new Error('timeoutMs must be positive'));
+  }
+  if (pollIntervalMs <= 0) {
+    return Promise.reject(new Error('pollIntervalMs must be positive'));
+  }
+
   return new Promise((resolve, reject) => {
     const startTime = Date.now();
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const check = () => {
-      const events = threadManager.getEvents(threadId);
-      const event = events.find((e) => e.type === eventType);
+      try {
+        const events = threadManager.getEvents(threadId);
+        const event = events.find((e) => e.type === eventType);
 
-      if (event) {
-        resolve(event);
-      } else if (Date.now() - startTime > timeoutMs) {
-        reject(new Error(`Timeout waiting for ${eventType} event after ${timeoutMs}ms`));
-      } else {
-        setTimeout(check, 10); // Poll every 10ms for efficiency
+        if (event) {
+          if (timeoutId) clearTimeout(timeoutId);
+          resolve(event);
+        } else if (Date.now() - startTime > timeoutMs) {
+          if (timeoutId) clearTimeout(timeoutId);
+          reject(new Error(`Timeout waiting for ${eventType} event after ${timeoutMs}ms`));
+        } else {
+          timeoutId = setTimeout(check, pollIntervalMs);
+        }
+      } catch (e) {
+        if (timeoutId) clearTimeout(timeoutId);
+        reject(e);
       }
     };
 
-    check();
+    timeoutId = setTimeout(check, 0);
   });
 }
 
@@ -51,7 +75,9 @@ export function waitForEvent(
  * @param eventType - Type of event to wait for
  * @param count - Number of events to wait for
  * @param timeoutMs - Maximum time to wait (default 5000ms)
+ * @param pollIntervalMs - Polling interval in milliseconds (default 10ms)
  * @returns Promise resolving to all matching events once count is reached
+ * @throws Error if timeout is reached before enough events are found, or if inputs are invalid
  *
  * Example:
  *   // Wait for 2 AGENT_MESSAGE events (initial response + continuation)
@@ -62,29 +88,54 @@ export function waitForEventCount(
   threadId: string,
   eventType: LaceEventType,
   count: number,
-  timeoutMs = 5000
+  timeoutMs = 5000,
+  pollIntervalMs = 10
 ): Promise<LaceEvent[]> {
+  if (!threadManager) {
+    return Promise.reject(new Error('threadManager is required'));
+  }
+  if (!threadId || typeof threadId !== 'string') {
+    return Promise.reject(new Error('threadId must be a non-empty string'));
+  }
+  if (count <= 0) {
+    return Promise.reject(new Error('count must be positive'));
+  }
+  if (timeoutMs <= 0) {
+    return Promise.reject(new Error('timeoutMs must be positive'));
+  }
+  if (pollIntervalMs <= 0) {
+    return Promise.reject(new Error('pollIntervalMs must be positive'));
+  }
+
   return new Promise((resolve, reject) => {
     const startTime = Date.now();
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const check = () => {
-      const events = threadManager.getEvents(threadId);
-      const matchingEvents = events.filter((e) => e.type === eventType);
+      try {
+        const events = threadManager.getEvents(threadId);
+        const matchingEvents = events.filter((e) => e.type === eventType);
 
-      if (matchingEvents.length >= count) {
-        resolve(matchingEvents);
-      } else if (Date.now() - startTime > timeoutMs) {
-        reject(
-          new Error(
-            `Timeout waiting for ${count} ${eventType} events after ${timeoutMs}ms (got ${matchingEvents.length})`
-          )
-        );
-      } else {
-        setTimeout(check, 10);
+        if (matchingEvents.length >= count) {
+          if (timeoutId) clearTimeout(timeoutId);
+          resolve(matchingEvents);
+        } else if (Date.now() - startTime > timeoutMs) {
+          if (timeoutId) clearTimeout(timeoutId);
+          reject(
+            new Error(
+              `Timeout waiting for ${count} ${eventType} events after ${timeoutMs}ms (got ${matchingEvents.length})`
+            )
+          );
+        } else {
+          timeoutId = setTimeout(check, pollIntervalMs);
+        }
+      } catch (e) {
+        if (timeoutId) clearTimeout(timeoutId);
+        reject(e);
       }
     };
 
-    check();
+    timeoutId = setTimeout(check, 0);
   });
 }
 
@@ -97,7 +148,9 @@ export function waitForEventCount(
  * @param predicate - Function that returns true when event matches
  * @param description - Human-readable description for error messages
  * @param timeoutMs - Maximum time to wait (default 5000ms)
+ * @param pollIntervalMs - Polling interval in milliseconds (default 10ms)
  * @returns Promise resolving to the first matching event
+ * @throws Error if timeout is reached before matching event is found, or if inputs are invalid
  *
  * Example:
  *   // Wait for TOOL_RESULT with specific ID
@@ -113,25 +166,53 @@ export function waitForEventMatch(
   threadId: string,
   predicate: (event: LaceEvent) => boolean,
   description: string,
-  timeoutMs = 5000
+  timeoutMs = 5000,
+  pollIntervalMs = 10
 ): Promise<LaceEvent> {
+  if (!threadManager) {
+    return Promise.reject(new Error('threadManager is required'));
+  }
+  if (!threadId || typeof threadId !== 'string') {
+    return Promise.reject(new Error('threadId must be a non-empty string'));
+  }
+  if (typeof predicate !== 'function') {
+    return Promise.reject(new Error('predicate must be a function'));
+  }
+  if (!description || typeof description !== 'string') {
+    return Promise.reject(new Error('description must be a non-empty string'));
+  }
+  if (timeoutMs <= 0) {
+    return Promise.reject(new Error('timeoutMs must be positive'));
+  }
+  if (pollIntervalMs <= 0) {
+    return Promise.reject(new Error('pollIntervalMs must be positive'));
+  }
+
   return new Promise((resolve, reject) => {
     const startTime = Date.now();
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const check = () => {
-      const events = threadManager.getEvents(threadId);
-      const event = events.find(predicate);
+      try {
+        const events = threadManager.getEvents(threadId);
+        const event = events.find(predicate);
 
-      if (event) {
-        resolve(event);
-      } else if (Date.now() - startTime > timeoutMs) {
-        reject(new Error(`Timeout waiting for ${description} after ${timeoutMs}ms`));
-      } else {
-        setTimeout(check, 10);
+        if (event) {
+          if (timeoutId) clearTimeout(timeoutId);
+          resolve(event);
+        } else if (Date.now() - startTime > timeoutMs) {
+          if (timeoutId) clearTimeout(timeoutId);
+          reject(new Error(`Timeout waiting for ${description} after ${timeoutMs}ms`));
+        } else {
+          timeoutId = setTimeout(check, pollIntervalMs);
+        }
+      } catch (e) {
+        if (timeoutId) clearTimeout(timeoutId);
+        reject(e);
       }
     };
 
-    check();
+    timeoutId = setTimeout(check, 0);
   });
 }
 

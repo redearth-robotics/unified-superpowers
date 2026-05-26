@@ -37,7 +37,7 @@ function extractDotBlocks(markdown) {
 
 function extractGraphBody(dotContent) {
   // Extract just the body (nodes and edges) from a digraph
-  const match = dotContent.match(/digraph\s+\w+\s*\{([\s\S]*)\}/);
+  const match = dotContent.match(/(?:strict\s+)?(?:di)?graph\s+["']?[\w]+["']?\s*\{([\s\S]*)\}/);
   if (!match) return '';
 
   let body = match[1];
@@ -68,11 +68,16 @@ ${bodies.join('\n\n')}
 }
 
 function renderToSvg(dotContent) {
+  if (dotContent.length > 1000000) { // 1MB limit
+    console.error('Error: dot content exceeds 1MB limit');
+    return null;
+  }
   try {
     return execSync('dot -Tsvg', {
       input: dotContent,
       encoding: 'utf-8',
-      maxBuffer: 10 * 1024 * 1024
+      maxBuffer: 10 * 1024 * 1024,
+      stdio: ['pipe', 'pipe', 'pipe']
     });
   } catch (err) {
     console.error('Error running dot:', err.message);
@@ -107,10 +112,21 @@ function main() {
     process.exit(1);
   }
 
-  // Check if dot is available
-  try {
-    execSync('which dot', { encoding: 'utf-8' });
-  } catch {
+  // Check if dot is available (cross-platform)
+  function commandExists(cmd) {
+    try {
+      if (process.platform === 'win32') {
+        execSync(`where ${cmd}`, { encoding: 'utf-8' });
+      } else {
+        execSync(`which ${cmd}`, { encoding: 'utf-8' });
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  if (!commandExists('dot')) {
     console.error('Error: graphviz (dot) not found. Install with:');
     console.error('  brew install graphviz    # macOS');
     console.error('  apt install graphviz     # Linux');
@@ -128,8 +144,13 @@ function main() {
   console.log(`Found ${blocks.length} diagram(s) in ${path.basename(skillDir)}/SKILL.md`);
 
   const outputDir = path.join(skillDir, 'diagrams');
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir);
+  try {
+    fs.mkdirSync(outputDir, { recursive: true });
+  } catch (err) {
+    if (err.code !== 'EEXIST') {
+      console.error('Failed to create output directory:', err);
+      process.exit(1);
+    }
   }
 
   if (combine) {

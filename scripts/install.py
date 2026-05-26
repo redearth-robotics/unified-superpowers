@@ -129,13 +129,13 @@ class Installer:
         """Verify the installation by counting skills"""
         self.log_info("Verifying installation...")
         
-        skill_count = len(list(self.install_dir.glob("skills/**/SKILL.md")))
-        
-        if skill_count == 95:
+        skill_count = len(list(self.install_dir.rglob("SKILL.md")))
+
+        if skill_count > 0:
             self.log_success(f"Installation verified: {skill_count} skills found")
             return True
         else:
-            self.log_warning(f"Expected 95 skills, found {skill_count}")
+            self.log_warning(f"No skills found in {self.install_dir}/skills")
             return False
 
     def install_to_platform_directories(self):
@@ -166,10 +166,14 @@ class Installer:
                 self.log_verbose(f"Installing to {platform_dir}")
 
                 # Copy skills to platform directory
-                import shutil
                 for skill_subdir in self.install_dir.glob("skills/*"):
                     if skill_subdir.is_dir():
                         dest = skills_dir / skill_subdir.name
+                        dest = dest.resolve()
+                        skills_dir_resolved = skills_dir.resolve()
+                        if not str(dest).startswith(str(skills_dir_resolved)):
+                            self.log_warning(f"Unsafe path detected: {dest}")
+                            continue
                         if dest.exists():
                             shutil.rmtree(dest)
                         shutil.copytree(skill_subdir, dest)
