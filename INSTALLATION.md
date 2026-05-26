@@ -48,6 +48,7 @@ Use the `-y` or `--yes` flag to skip all prompts:
 - `-u, --url URL` - Repository URL
 - `-y, --yes` - Automated mode (no prompts)
 - `--skip-deps` - Skip dependency checks
+- `--no-platforms` - Skip platform-specific installation
 - `-v, --verbose` - Verbose output
 - `-h, --help` - Show help message
 
@@ -68,6 +69,42 @@ Use the `-y` or `--yes` flag to skip all prompts:
 ./scripts/install.sh -v
 ```
 
+## Platform-Specific Installation
+
+By default, the installer automatically copies skills to platform-specific directories:
+
+### Linux/macOS
+- `~/.claude/skills/` - Claude Code skills
+- `~/.opencode/skills/` - OpenCode skills
+- `~/.devin/skills/` - Devin CLI skills
+- `~/.codeium/skills/` - Codeium skills
+- `~/.codex/skills/` - Codex skills
+- `~/.copilot/skills/` - GitHub Copilot skills
+
+### Windows
+- `%USERPROFILE%\.claude\skills\` - Claude Code skills
+- `%USERPROFILE%\.opencode\skills\` - OpenCode skills
+- `%USERPROFILE%\.devin\skills\` - Devin CLI skills
+- `%USERPROFILE%\.codeium\skills\` - Codeium skills
+- `%USERPROFILE%\.codex\skills\` - Codex skills
+- `%USERPROFILE%\.copilot\skills\` - GitHub Copilot skills
+
+### Disabling Platform Installation
+
+To skip platform-specific installation:
+```bash
+./scripts/install.sh --no-platforms
+python3 scripts/install.py --no-platforms
+.\scripts\install.ps1 -NoPlatforms
+```
+
+### Platform Installation Behavior
+- Platform directories are created if they don't exist
+- Skills are copied to `skills/` subdirectory in each platform directory
+- On update, existing skills are replaced (full refresh)
+- Installation continues even if some platform directories fail
+- Errors are logged but don't stop the main installation
+
 ## Platform-Specific Details
 
 ### Linux/macOS (Bash)
@@ -83,6 +120,9 @@ Use the `-y` or `--yes` flag to skip all prompts:
 
 # Skip dependency checks
 ./scripts/install.sh --skip-deps
+
+# Skip platform installation
+./scripts/install.sh --no-platforms
 ```
 
 ### Windows (PowerShell)
@@ -98,6 +138,9 @@ Use the `-y` or `--yes` flag to skip all prompts:
 
 # Skip dependency checks
 .\scripts\install.ps1 -SkipDeps
+
+# Skip platform installation
+.\scripts\install.ps1 -NoPlatforms
 ```
 
 ### Cross-Platform (Python)
@@ -113,6 +156,9 @@ python3 scripts/install.py -d ~/my-skills
 
 # Skip dependency checks
 python3 scripts/install.py --skip-deps
+
+# Skip platform installation
+python3 scripts/install.py --no-platforms
 ```
 
 ## Prerequisites
