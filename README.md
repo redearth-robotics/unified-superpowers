@@ -1,6 +1,6 @@
 # Unified Superpowers Toolkit
 
-100 battle-tested AI skills for the complete development lifecycle. From brainstorming to bug bounty to robot deployment, in one place.
+101 battle-tested AI skills for the complete development lifecycle. From brainstorming to bug bounty to robot deployment, in one place.
 
 This is a curated integration of skills from three sources:
 
@@ -28,7 +28,7 @@ The installer auto-deploys skills to 7 AI coding platforms: .claude, .opencode, 
 Verify:
 ```bash
 find skills -name "SKILL.md" | wc -l
-# Should output: 100
+# Should output: 101
 ```
 
 ## What's Inside
@@ -105,7 +105,7 @@ For full details, see [INSTALLATION.md](INSTALLATION.md).
 
 ## Documentation
 
-- [SKILL_CATALOG.md](SKILL_CATALOG.md) — All 100 skills, organized by domain
+- [SKILL_CATALOG.md](SKILL_CATALOG.md) — All 101 skills, organized by domain
 - [docs/ENGAGEMENTS.md](docs/ENGAGEMENTS.md) — Security skill provenance: real engagement records
 - [INSTALLATION.md](INSTALLATION.md) — Platform-specific setup and troubleshooting
 

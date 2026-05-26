@@ -11,7 +11,15 @@ Comprehensive rewrite of README.md with narrative, technical details, and benefi
 - Updated 'Updates & Maintenance' section with all three sources
 - Enhanced 'Links' section with documentation references
 
-Open follow-ups: none
+Open follow-ups:
+- Fixed README.md counts: line 3 (100→101), line 31 (100→101), line 108 (100→101)
+- Fixed docs/README-super-description-design.md: 100→101
+- Fixed config/skills-list.txt: 100→101
+- Enhanced framework-orchestrator SKILL.md:
+  - Added Detection Implementation Guide with concrete patterns
+  - Added Framework Invocation Mechanism section
+  - Added User Override Handling with explicit phrases
+  - Expanded Red Flags with framework-specific pitfalls
 
 ## 2026-05-26 — Add framework-orchestrator skill
 

@@ -1,5 +1,5 @@
 # Unified Superpowers Toolkit - Complete Skill List
-# Total: 100 skills across 4 domains
+# Total: 101 skills across 4 domains
 # Updated: 2026-05-26 (synced with Claude-BugHunter v2.0)
 
 [core/]

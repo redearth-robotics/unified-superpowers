@@ -15,11 +15,11 @@ Current README is functional but lacks compelling narrative and comprehensive va
 
 ### 2. "Why This Matters" Section
 **The problem**: Developers need AI assistance across security, robotics, and development but tools are fragmented
-**The solution**: Unified toolkit with 100 specialized skills from three expert sources
+**The solution**: Unified toolkit with 101 specialized skills from three expert sources
 **The impact**: Complete development lifecycle coverage from planning to deployment
 
 ### 3. Source Repository Highlights
-**obra/superpowers**: Core process skills (15) - Foundation for systematic development workflows
+**obra/superpowers**: Core process skills (16) - Foundation for systematic development workflows
 - Skills: brainstorming, systematic-debugging, test-driven-development, verification-before-completion, writing-plans, etc.
 - Purpose: Provides the methodology and process framework for all development work
 
@@ -37,7 +37,7 @@ Current README is functional but lacks compelling narrative and comprehensive va
 - Security: 52 skills covering bug bounty, vulnerability hunting, pentesting, OSINT
 - Robotics: 18 skills covering ROS, GPS/INS fusion, SLAM, embedded systems
 - Languages: 15 skills covering Python, C++, Rust, JavaScript, MATLAB, DevOps
-- Core Process: 15 skills covering debugging, testing, planning, code review
+- Core Process: 16 skills covering debugging, testing, planning, code review, framework orchestration
 
 **Skill quality indicators**:
 - Battle-tested: Security skills from real engagements
@@ -83,7 +83,7 @@ Current README is functional but lacks compelling narrative and comprehensive va
 - CI/CD and DevOps automation
 
 ### 7. What Makes This Different
-**Comprehensive**: 100 skills from three expert sources vs fragmented single-domain tools
+**Comprehensive**: 101 skills from three expert sources vs fragmented single-domain tools
 **Battle-tested**: Security skills from real engagements, core skills from production use
 **Integrated**: Seamless workflow across security, robotics, and development domains
 **Maintained**: Regular updates from all three source repositories
@@ -97,7 +97,7 @@ Current README is functional but lacks compelling narrative and comprehensive va
 5. Add "Benefits & Outcomes" section
 6. Add "Target Audiences" section
 7. Enhance "What Makes This Different" section
-8. Update all skill count references (already at 100)
+8. Update all skill count references (already at 101)
 9. Update source attribution throughout README
 10. Verify all links and references are correct
 
@@ -108,4 +108,4 @@ Current README is functional but lacks compelling narrative and comprehensive va
 - Benefits and outcomes clearly articulated
 - Target audiences well-defined
 - Technical details comprehensive but not overwhelming
-- All skill counts accurate (100 total)
+- All skill counts accurate (101 total)
