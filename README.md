@@ -1,14 +1,15 @@
 # Unified Superpowers Toolkit
 
-101 battle-tested AI skills for the complete development lifecycle. From brainstorming to bug bounty to robot deployment, in one place.
+102 battle-tested AI skills for the complete development lifecycle. From brainstorming to bug bounty to robot deployment, in one place.
 
-This is a curated integration of skills from three sources:
+This is a curated integration of skills from four sources:
 
 - **[obra/superpowers](https://github.com/obra/superpowers)** — 15 core process skills. The methodology framework: debugging, testing, planning, code review.
 - **[Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter)** — 52 security skills. Built from real engagements with 681 disclosed vulnerability reports.
 - **[robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers)** — 33 robotics and language skills. ROS, sensor fusion, localization, plus Python, C++, Rust, JavaScript, and more.
+- **[stop-slop](https://github.com/hardikp/stop-slop)** — 1 writing skill. Remove AI-generated patterns from prose. Active voice, no filler, no adverbs.
 
-Total: 101 skills.
+Total: 102 skills.
 
 ## Quick Start
 
@@ -28,7 +29,7 @@ The installer auto-deploys skills to 7 AI coding platforms: .claude, .opencode, 
 Verify:
 ```bash
 find skills -name "SKILL.md" | wc -l
-# Should output: 101
+# Should output: 102
 ```
 
 ## What's Inside
@@ -39,6 +40,7 @@ find skills -name "SKILL.md" | wc -l
 | Robotics | 18 | ROS, GPS/INS fusion, SLAM, embedded systems |
 | Languages | 15 | Python, C++, Rust, JavaScript, MATLAB, DevOps, Linux |
 | Core Process | 16 | Debugging, TDD, planning, code review, parallel agents, framework orchestration |
+| Writing | 1 | Remove AI slop from prose. Active voice, no filler |
 
 See [SKILL_CATALOG.md](SKILL_CATALOG.md) for the full list.
 
@@ -62,6 +64,12 @@ Skills auto-trigger based on what you ask. No manual loading, no configuration f
 ```
 "This Python function is slow"
 → Activates python-expert + systematic-debugging
+```
+
+**Writing example:**
+```
+"This README sounds like AI wrote it"
+→ Activates stop-slop
 ```
 
 ## Popular Skills
@@ -105,7 +113,7 @@ For full details, see [INSTALLATION.md](INSTALLATION.md).
 
 ## Documentation
 
-- [SKILL_CATALOG.md](SKILL_CATALOG.md) — All 101 skills, organized by domain
+- [SKILL_CATALOG.md](SKILL_CATALOG.md) — All 102 skills, organized by domain
 - [docs/ENGAGEMENTS.md](docs/ENGAGEMENTS.md) — Security skill provenance: real engagement records
 - [INSTALLATION.md](INSTALLATION.md) — Platform-specific setup and troubleshooting
 
@@ -128,6 +136,7 @@ Contribute to the original repositories, not here:
 - [obra/superpowers](https://github.com/obra/superpowers) — Core process skills
 - [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter) — Security skills
 - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers) — Robotics & language skills
+- [stop-slop](https://github.com/hardikp/stop-slop) — Writing skills
 
 This repo is the integration layer. It preserves original skill structure, maintains all original licenses, and handles cross-platform deployment.
 

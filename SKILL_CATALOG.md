@@ -1,6 +1,6 @@
 # Skill Catalog
 
-Complete listing of all 101 skills in the Unified Superpowers Toolkit, organized by domain.
+Complete listing of all 102 skills in the Unified Superpowers Toolkit, organized by domain.
 
 ## Core Process Skills (16)
 
@@ -115,6 +115,10 @@ Complete listing of all 101 skills in the Unified Superpowers Toolkit, organized
 - `hunt-api-misconfig` — API security (language-agnostic)
 - `hunt-aspnet` — ASP.NET security
 
+## Writing Skills (1)
+
+- `stop-slop` — Remove AI writing patterns from prose (Hardik Pandya)
+
 ---
 
-**Total: 101 skills across 4 domains**
+**Total: 102 skills across 5 domains**

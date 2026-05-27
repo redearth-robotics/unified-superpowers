@@ -1,6 +1,6 @@
 # Unified Superpowers Toolkit - Complete Skill List
-# Total: 101 skills across 4 domains
-# Updated: 2026-05-26 (synced with Claude-BugHunter v2.0)
+# Total: 102 skills across 5 domains
+# Updated: 2026-05-27 (added stop-slop writing skill)
 
 [core/]
 brainstorming
@@ -18,7 +18,7 @@ using-superpowers
 verification-before-completion
 writing-plans
 writing-skills
-# Core: 15 skills
+# Core: 16 skills
 
 [languages/]
 cpp-expert
@@ -113,4 +113,8 @@ vmware-vcenter-attack
 web2-recon
 web3-audit
 # Security: 52 skills
+
+[writing/]
+stop-slop
+# Writing: 1 skill
 

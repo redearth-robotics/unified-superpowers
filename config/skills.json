@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "name": "Unified Superpowers Toolkit",
-  "description": "Combined security testing and robotics engineering skillset",
+  "description": "Combined security testing, robotics engineering, and writing quality skillset",
   "domains": {
     "core": {
       "count": 16,
@@ -123,9 +123,15 @@
         "software-architect",
         "web-expert"
       ]
+    },
+    "writing": {
+      "count": 1,
+      "skills": [
+        "stop-slop"
+      ]
     }
   },
-  "total_skills": 101,
+  "total_skills": 102,
   "sources": [
     {
       "name": "Claude-BugHunter",
@@ -136,9 +142,14 @@
       "name": "robotics-superpowers",
       "url": "https://github.com/RedEarth-Robotics/robotics-superpowers",
       "skills_contributed": 47
+    },
+    {
+      "name": "stop-slop",
+      "url": "https://github.com/hardikp/stop-slop",
+      "skills_contributed": 1
     }
   ],
   "merged_skills": ["security-pentester"],
   "created_at": "2026-05-26",
-  "updated_at": "2026-05-26"
+  "updated_at": "2026-05-27"
 }
