@@ -1,15 +1,16 @@
 # Unified Superpowers Toolkit
 
-102 battle-tested AI skills for the complete development lifecycle. From brainstorming to bug bounty to robot deployment, in one place.
+111 battle-tested AI skills for the complete development lifecycle. From brainstorming to bug bounty to robot deployment, in one place.
 
-This is a curated integration of skills from four sources:
+This is a curated integration of skills from five sources:
 
 - **[obra/superpowers](https://github.com/obra/superpowers)** — 15 core process skills. The methodology framework: debugging, testing, planning, code review.
 - **[Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter)** — 52 security skills. Built from real engagements with 681 disclosed vulnerability reports.
 - **[robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers)** — 33 robotics and language skills. ROS, sensor fusion, localization, plus Python, C++, Rust, JavaScript, and more.
 - **[stop-slop](https://github.com/hardikp/stop-slop)** — 1 writing skill. Remove AI-generated patterns from prose. Active voice, no filler, no adverbs.
+- **[agentic_installers_tools](https://github.com/navya/agentic_installers_tools)** — 9 skills. Navya autonomous vehicle ecosystem (C++ build, Git flow, RTMaps), skill discovery, and developer tooling.
 
-Total: 102 skills.
+Total: 111 skills.
 
 ## Quick Start
 
@@ -26,10 +27,19 @@ Or use the installer:
 
 The installer auto-deploys skills to 7 AI coding platforms: .claude, .opencode, .devin, .codeium, .codex, .copilot, .cursor. Skip with `--no-platforms`.
 
+Or use the new interactive installers:
+```bash
+# MCP stack installer (DCP, skills framework, MCP servers)
+bash scripts/install-mcp-stack.sh
+
+# Script manager (browse and run all scripts)
+bash scripts/scripts-manager.sh
+```
+
 Verify:
 ```bash
 find skills -name "SKILL.md" | wc -l
-# Should output: 102
+# Should output: 111
 ```
 
 ## What's Inside
@@ -37,9 +47,10 @@ find skills -name "SKILL.md" | wc -l
 | Domain | Count | Highlights |
 |--------|-------|------------|
 | Security | 52 | 28 hunt modules, bug bounty, pentesting, OSINT |
+| Core Process | 17 | Debugging, TDD, planning, code review, parallel agents, framework orchestration, skill discovery |
 | Robotics | 18 | ROS, GPS/INS fusion, SLAM, embedded systems |
-| Languages | 15 | Python, C++, Rust, JavaScript, MATLAB, DevOps, Linux |
-| Core Process | 16 | Debugging, TDD, planning, code review, parallel agents, framework orchestration |
+| Languages | 17 | Python, C++, Rust, JavaScript, MATLAB, DevOps, Linux, likec4, Slidev |
+| Navya | 6 | C++ build (Doyle), Git flow, RTMaps, configuration (Grimoire), drive composition (Spellcaster) |
 | Writing | 1 | Remove AI slop from prose. Active voice, no filler |
 
 See [SKILL_CATALOG.md](SKILL_CATALOG.md) for the full list.
@@ -72,6 +83,12 @@ Skills auto-trigger based on what you ask. No manual loading, no configuration f
 → Activates stop-slop
 ```
 
+**Navya example:**
+```
+"How do I build this C++ project with Doyle?"
+→ Activates doyle + navya
+```
+
 ## Popular Skills
 
 **Security**
@@ -90,8 +107,16 @@ Skills auto-trigger based on what you ask. No manual loading, no configuration f
 - `brainstorming` — Design and specification creation
 - `python-expert` — Debugging, optimization, best practices
 - `cpp-expert` — Review, safety, MISRA compliance
+- `find-skills` — Discover and install skills from the open ecosystem
+
+**Navya**
+- `doyle` — C++ workspace and build manager (Conan/CMake)
+- `navya-git-flow` — Git workflow for C++ projects and Chaudron integration
+- `spellcaster` — Drive composition and deployment CLI
 
 ## Installation Options
+
+### Skill Deployment
 
 All scripts support `-d` (custom directory), `-y` (automated), `--skip-deps`, `--no-platforms`, `-v` (verbose).
 
@@ -109,13 +134,44 @@ python3 scripts/install.py
 .\scripts\install.ps1 -NoPlatforms
 ```
 
-For full details, see [INSTALLATION.md](INSTALLATION.md).
+### MCP Stack & Tooling
+
+Interactive installers with menus, dry-run support, and component selection:
+
+```bash
+# MCP stack installer — DCP, skills framework, MCP servers, tools
+bash scripts/install-mcp-stack.sh          # Full interactive mode
+bash scripts/install-mcp-stack.sh --minimal # Core stack only
+bash scripts/install-mcp-stack.sh --dry-run # Preview without installing
+
+# Script manager — browse and run all project scripts
+bash scripts/scripts-manager.sh            # Interactive menu
+bash scripts/scripts-manager.sh --dry-run  # Preview mode
+```
+
+### Utility Scripts
+
+```bash
+# Backup/restore AI configurations
+bash scripts/backup-restore-ai-configs.sh save
+bash scripts/backup-restore-ai-configs.sh restore --from=~/backups/latest
+
+# Maintain and update stack components
+bash scripts/maintain-stack.sh --check     # Check for updates
+bash scripts/maintain-stack.sh --update    # Interactive update
+
+# Run benchmark suite
+bash scripts/run-benchmark.sh
+```
+
+For full details, see [INSTALLATION.md](INSTALLATION.md) and [scripts/README.md](scripts/README.md).
 
 ## Documentation
 
-- [SKILL_CATALOG.md](SKILL_CATALOG.md) — All 102 skills, organized by domain
+- [SKILL_CATALOG.md](SKILL_CATALOG.md) — All 111 skills, organized by domain
 - [docs/ENGAGEMENTS.md](docs/ENGAGEMENTS.md) — Security skill provenance: real engagement records
 - [INSTALLATION.md](INSTALLATION.md) — Platform-specific setup and troubleshooting
+- [scripts/README.md](scripts/README.md) — Scripts and installer documentation
 
 ## Updates
 
@@ -137,6 +193,7 @@ Contribute to the original repositories, not here:
 - [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter) — Security skills
 - [robotics-superpowers](https://github.com/RedEarth-Robotics/robotics-superpowers) — Robotics & language skills
 - [stop-slop](https://github.com/hardikp/stop-slop) — Writing skills
+- [agentic_installers_tools](https://github.com/navya/agentic_installers_tools) — Navya ecosystem and developer tooling
 
 This repo is the integration layer. It preserves original skill structure, maintains all original licenses, and handles cross-platform deployment.
 
