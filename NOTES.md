@@ -1,3 +1,44 @@
+## 2026-06-04 01:15 — Create unified installers
+
+Created modular menu system for unified-superpowers scripts:
+- `install-mcp-stack.sh` — consolidated MCP/token optimization stack installer
+  - Replaces setup-token-optimizer.sh with cleaner interactive menu
+  - Supports --dry-run, --minimal, --full modes
+  - Categories: Core Stack, MCP Servers, Tools, Configuration
+- `scripts-manager.sh` — unified script manager
+  - Hierarchical menu: Installation, Utilities, Setup, MCP Stack, Custom, Help
+  - Auto-discovers available scripts
+  - Remembers state between sessions
+- Updated `scripts/README.md` with new installer documentation
+- Both scripts made executable
+
+Open follow-ups: Test both installers in a fresh environment
+
+## 2026-06-04 00:56 — Integrate agentic_installers_tools skills and scripts
+
+Integrated skills and scripts from agentic_installers_tools into unified-superpowers:
+- Extracted skills from skills_navya_doyle_spellcaster.zip
+- Added `find-skills` to `skills/core/` (skill discovery and installation)
+- Added `likec4-dsl` to `skills/languages/` (architecture modeling DSL)
+- Added `slidev` to `skills/languages/` (presentation tool)
+- Created new `skills/navya/` directory and added Navya ecosystem skills:
+  - `navya` (umbrella skill for Navya development ecosystem)
+  - `navya-git-flow` (git workflow for C++ projects and Chaudron integration)
+  - `doyle` (Navya C++ workspace and build manager)
+  - `grimoire` (configuration library)
+  - `rtmaps` (real-time data-flow middleware)
+  - `spellcaster` (drive composition CLI)
+- Copied scripts to `scripts/`:
+  - `backup-restore-ai-configs.sh` (AI configuration backup/restore)
+  - `maintain-stack.sh` (stack maintenance script)
+  - `run-benchmark.sh` (benchmark runner)
+  - `setup-global-token-rules.sh` (global token rules setup)
+  - `setup-token-optimizer.sh` (token optimizer setup)
+  - `README.md` (scripts documentation)
+- Made all scripts executable
+
+Open follow-ups: Update skill counts in config files and documentation
+
 ## 2025-05-26 22:15 — Add super description to README.md
 
 Comprehensive rewrite of README.md with narrative, technical details, and benefits:
