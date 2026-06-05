@@ -1,30 +1,13 @@
 # Installation Guide
 
-This guide covers installing the Unified Superpowers Toolkit using the provided installation scripts.
+This guide covers installing the Unified Superpowers Toolkit using the universal installation script.
 
 ## Quick Install
 
-### Universal Installer (Recommended)
+### Universal Installer
 ```bash
-# Auto-detects platform and runs appropriate installer
+# Cross-platform installer that works on Linux, macOS, and Windows (via Git Bash/WSL)
 ./scripts/install-universal.sh
-```
-
-### Platform-Specific Installers
-
-**Linux/macOS:**
-```bash
-./scripts/install.sh
-```
-
-**Windows:**
-```powershell
-.\scripts\install.ps1
-```
-
-**Cross-platform (Python):**
-```bash
-python3 scripts/install.py
 ```
 
 ## Installation Modes
@@ -43,7 +26,6 @@ Use the `-y` or `--yes` flag to skip all prompts:
 
 ## Command-Line Options
 
-### Common Options (All Platforms)
 - `-d, --directory DIR` - Installation directory (default: `./unified-superpowers`)
 - `-u, --url URL` - Repository URL
 - `-y, --yes` - Automated mode (no prompts)
@@ -56,17 +38,17 @@ Use the `-y` or `--yes` flag to skip all prompts:
 
 **Custom installation directory:**
 ```bash
-./scripts/install.sh -d ~/my-skills
+./scripts/install-universal.sh -d ~/my-skills
 ```
 
 **Automated installation with custom URL:**
 ```bash
-./scripts/install.sh -y -u https://github.com/RedEarth-Robotics/unified-superpowers.git
+./scripts/install-universal.sh -y -u https://github.com/RedEarth-Robotics/unified-superpowers.git
 ```
 
 **Verbose output for debugging:**
 ```bash
-./scripts/install.sh -v
+./scripts/install-universal.sh -v
 ```
 
 ## Platform-Specific Installation
@@ -95,9 +77,7 @@ By default, the installer automatically copies skills to platform-specific direc
 
 To skip platform-specific installation:
 ```bash
-./scripts/install.sh --no-platforms
-python3 scripts/install.py --no-platforms
-.\scripts\install.ps1 -NoPlatforms
+./scripts/install-universal.sh --no-platforms
 ```
 
 ### Platform Installation Behavior
@@ -107,62 +87,6 @@ python3 scripts/install.py --no-platforms
 - Installation continues even if some platform directories fail
 - Errors are logged but don't stop the main installation
 
-## Platform-Specific Details
-
-### Linux/macOS (Bash)
-```bash
-# Basic installation
-./scripts/install.sh
-
-# Automated mode
-./scripts/install.sh --yes
-
-# Custom directory
-./scripts/install.sh -d /opt/unified-superpowers
-
-# Skip dependency checks
-./scripts/install.sh --skip-deps
-
-# Skip platform installation
-./scripts/install.sh --no-platforms
-```
-
-### Windows (PowerShell)
-```powershell
-# Basic installation
-.\scripts\install.ps1
-
-# Automated mode
-.\scripts\install.ps1 -Yes
-
-# Custom directory
-.\scripts\install.ps1 -Directory "C:\Skills\unified-superpowers"
-
-# Skip dependency checks
-.\scripts\install.ps1 -SkipDeps
-
-# Skip platform installation
-.\scripts\install.ps1 -NoPlatforms
-```
-
-### Cross-Platform (Python)
-```bash
-# Basic installation
-python3 scripts/install.py
-
-# Automated mode
-python3 scripts/install.py --yes
-
-# Custom directory
-python3 scripts/install.py -d ~/my-skills
-
-# Skip dependency checks
-python3 scripts/install.py --skip-deps
-
-# Skip platform installation
-python3 scripts/install.py --no-platforms
-```
-
 ## Prerequisites
 
 ### Required
@@ -170,10 +94,7 @@ python3 scripts/install.py --no-platforms
   - Ubuntu/Debian: `sudo apt-get install git`
   - macOS: `brew install git`
   - Windows: Download from [git-scm.com](https://git-scm.com/)
-
-### Optional
-- **Python 3** - For Python installer (version 3.6+)
-- **PowerShell** - For Windows installer (usually pre-installed)
+- **Bash** - Shell environment (pre-installed on Linux/macOS, available via Git Bash on Windows)
 
 ## Verification
 
@@ -182,7 +103,7 @@ After installation, verify the setup:
 ```bash
 cd unified-superpowers
 find skills -name "SKILL.md" | wc -l
-# Should output: 95
+# Should output: 111
 ```
 
 ## Post-Installation Configuration
@@ -201,7 +122,7 @@ Consult your platform's documentation for skill integration. Most platforms supp
 If you already have the toolkit installed, run the installer again. It will detect the existing installation and offer to update it:
 
 ```bash
-./scripts/install.sh
+./scripts/install-universal.sh
 # The installer will ask: "Do you want to update the existing installation?"
 ```
 
@@ -213,19 +134,11 @@ If you already have the toolkit installed, run the installer again. It will dete
 **Solution:** Install git using your system's package manager or download from [git-scm.com](https://git-scm.com/)
 
 ### Permission Denied
-**Error:** `Permission denied: ./scripts/install.sh`
+**Error:** `Permission denied: ./scripts/install-universal.sh`
 
 **Solution:** Make the script executable:
 ```bash
-chmod +x scripts/install.sh
-```
-
-### PowerShell Execution Policy
-**Error:** `cannot be loaded because running scripts is disabled`
-
-**Solution:** Enable script execution:
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+chmod +x scripts/install-universal.sh
 ```
 
 ### Directory Already Exists
@@ -238,19 +151,19 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ### Custom Repository
 Install from a fork or different repository:
 ```bash
-./scripts/install.sh -u git@github.com:your-username/unified-superpowers.git
+./scripts/install-universal.sh -u git@github.com:your-username/unified-superpowers.git
 ```
 
 ### System-Wide Installation
 Install to a system directory (requires sudo):
 ```bash
-sudo ./scripts/install.sh -d /opt/unified-superpowers
+sudo ./scripts/install-universal.sh -d /opt/unified-superpowers
 ```
 
 ### CI/CD Integration
 For automated environments, use the automated mode:
 ```bash
-./scripts/install.sh -y -d ./skills --skip-deps
+./scripts/install-universal.sh -y -d ./skills --skip-deps
 ```
 
 ## Uninstallation

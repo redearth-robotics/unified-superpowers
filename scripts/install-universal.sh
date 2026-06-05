@@ -1,34 +1,152 @@
 #!/bin/bash
 # Universal Installation Script
-# Auto-detects platform and runs appropriate installer
+# Standalone cross-platform installer for Unified Superpowers Toolkit
 
 set -e
 
-# Parse arguments
-SKIP_DEPS=false
-NO_PLATFORMS=false
-VERBOSE=false
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
+# Default values
+REPO_URL="git@github.com:RedEarth-Robotics/unified-superpowers.git"
+INSTALL_DIR="./unified-superpowers"
+INTERACTIVE=true
+SKIP_DEPENDENCIES=false
+VERBOSE=false
+DO_PLATFORM_INSTALL=true
+
+# Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
+        -d|--directory)
+            INSTALL_DIR="$2"
+            shift 2
+            ;;
+        -u|--url)
+            REPO_URL="$2"
+            shift 2
+            ;;
+        -y|--yes)
+            INTERACTIVE=false
+            shift
+            ;;
         --skip-deps)
-            SKIP_DEPS=true
+            SKIP_DEPENDENCIES=true
             shift
             ;;
         --no-platforms)
-            NO_PLATFORMS=true
+            DO_PLATFORM_INSTALL=false
             shift
             ;;
         -v|--verbose)
             VERBOSE=true
             shift
             ;;
+        -h|--help)
+            echo "Usage: $0 [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  -d, --directory DIR    Installation directory (default: ./unified-superpowers)"
+            echo "  -u, --url URL          Repository URL (default: git@github.com:RedEarth-Robotics/unified-superpowers.git)"
+            echo "  -y, --yes              Automated mode (no prompts)"
+            echo "  --skip-deps           Skip dependency checks"
+            echo "  --no-platforms        Skip platform-specific installation"
+            echo "  -v, --verbose          Verbose output"
+            echo "  -h, --help             Show this help message"
+            exit 0
+            ;;
         *)
-            # Pass other arguments to the installer
-            break
+            echo -e "${RED}Unknown option: $1${NC}"
+            exit 1
             ;;
     esac
 done
+
+# Logging functions
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Verbose logging
+log_verbose() {
+    if [ "$VERBOSE" = true ]; then
+        echo -e "${BLUE}[VERBOSE]${NC} $1"
+    fi
+}
+
+# Check if command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Check dependencies
+check_dependencies() {
+    if [ "$SKIP_DEPENDENCIES" = true ]; then
+        log_warning "Skipping dependency checks"
+        return 0
+    fi
+
+    log_info "Checking dependencies..."
+
+    if ! command_exists git; then
+        log_error "git is not installed. Please install git first."
+        log_info "On Ubuntu/Debian: sudo apt-get install git"
+        log_info "On macOS: brew install git"
+        log_info "On Windows: Download from https://git-scm.com/"
+        return 1
+    fi
+
+    log_success "All dependencies satisfied"
+}
+
+# Interactive prompts
+prompt_yes_no() {
+    local prompt="$1"
+    local default="$2"
+    
+    if [ "$INTERACTIVE" = false ]; then
+        return 0
+    fi
+
+    while true; do
+        read -p "$prompt [$default] " response
+        response=${response:-$default}
+        case $response in
+            [Yy]* ) return 0;;
+            [Nn]* ) return 1;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}
+
+prompt_directory() {
+    local prompt="$1"
+    local default="$2"
+    
+    if [ "$INTERACTIVE" = false ]; then
+        echo "$default"
+        return
+    fi
+
+    read -p "$prompt [$default] " response
+    echo "${response:-$default}"
+}
 
 # Detect platform
 detect_platform() {
@@ -43,67 +161,115 @@ detect_platform() {
     echo "$PLATFORM"
 }
 
-# Check if Python is available
-check_python() {
-    if command -v python3 &> /dev/null; then
-        echo "python3"
-    elif command -v python &> /dev/null; then
-        echo "python"
+# Main installation
+install_toolkit() {
+    log_info "Starting Unified Superpowers Toolkit installation..."
+    
+    # Check if directory already exists
+    if [ -d "$INSTALL_DIR" ]; then
+        log_warning "Directory '$INSTALL_DIR' already exists"
+        if prompt_yes_no "Do you want to update the existing installation?" "y"; then
+            log_info "Updating existing installation..."
+            cd "$INSTALL_DIR"
+            git pull origin master
+            log_success "Installation updated successfully"
+        else
+            log_info "Installation cancelled by user"
+            exit 0
+        fi
     else
-        echo ""
+        # Clone repository
+        log_info "Cloning repository from $REPO_URL..."
+        git clone "$REPO_URL" "$INSTALL_DIR"
+        
+        if [ $? -ne 0 ]; then
+            log_error "Failed to clone repository"
+            exit 1
+        fi
+        
+        log_success "Repository cloned successfully"
+        cd "$INSTALL_DIR"
     fi
+
+    # Verify installation
+    SKILL_COUNT=$(find skills -name "SKILL.md" 2>/dev/null | wc -l)
+    
+    if [ "$SKILL_COUNT" -gt 0 ]; then
+        log_success "Installation verified: $SKILL_COUNT skills found"
+    else
+        log_warning "No skills found in $INSTALL_DIR/skills"
+    fi
+
+    # Install to platform-specific directories
+    if [ "$DO_PLATFORM_INSTALL" = true ]; then
+        log_info "Installing skills to platform directories..."
+        
+        # Platform directories
+        PLATFORM_DIRS=(
+            "$HOME/.claude"
+            "$HOME/.opencode"
+            "$HOME/.devin"
+            "$HOME/.codeium"
+            "$HOME/.codex"
+            "$HOME/.copilot"
+            "$HOME/.cursor"
+        )
+        
+        for platform_dir in "${PLATFORM_DIRS[@]}"; do
+            if [ -d "$platform_dir" ] || mkdir -p "$platform_dir" 2>/dev/null; then
+                log_verbose "Installing to $platform_dir"
+                # Copy skills to platform directory
+                cp -r skills/* "$platform_dir/skills/" 2>/dev/null || true
+                if [ $? -eq 0 ]; then
+                    log_success "Installed to $platform_dir"
+                else
+                    log_warning "Failed to install to $platform_dir"
+                fi
+            else
+                log_warning "Could not create/access $platform_dir"
+            fi
+        done
+    fi
+
+    # Show summary
+    echo ""
+    log_success "Installation completed successfully!"
+    echo ""
+    echo "Installation Summary:"
+    echo "  Location: $(pwd)"
+    echo "  Skills: $SKILL_COUNT"
+    echo "  Repository: $REPO_URL"
+    echo ""
+    echo "Next Steps:"
+    echo "  1. Configure your AI assistant to use the skills/ directory"
+    echo "  2. Skills will auto-discover based on your platform"
+    echo "  3. Check README.md for usage examples"
+    echo ""
 }
 
 # Main execution
 main() {
     PLATFORM=$(detect_platform)
-    PYTHON=$(check_python)
-
     echo "Detected platform: $PLATFORM"
+    echo "=========================================="
+    echo "Unified Superpowers Toolkit Installer"
+    echo "=========================================="
+    echo ""
 
-    # Try Python script first (most universal)
-    if [ -n "$PYTHON" ]; then
-        echo "Using Python installer..."
-        ARGS=""
-        [ "$SKIP_DEPS" = true ] && ARGS="$ARGS --skip-deps"
-        [ "$NO_PLATFORMS" = true ] && ARGS="$ARGS --no-platforms"
-        [ "$VERBOSE" = true ] && ARGS="$ARGS --verbose"
-        exec "$PYTHON" "$(dirname "$0")/install.py" $ARGS "$@"
+    # Interactive mode prompts
+    if [ "$INTERACTIVE" = true ]; then
+        INSTALL_DIR=$(prompt_directory "Installation directory" "$INSTALL_DIR")
+        
+        if prompt_yes_no "Check for required dependencies?" "y"; then
+            check_dependencies
+        fi
+    else
+        check_dependencies
     fi
 
-    # Fall back to platform-specific scripts
-    case "$PLATFORM" in
-        linux|macos)
-            if [ -f "$(dirname "$0")/install.sh" ]; then
-                echo "Using Bash installer..."
-                ARGS=""
-                [ "$SKIP_DEPS" = true ] && ARGS="$ARGS --skip-deps"
-                [ "$NO_PLATFORMS" = true ] && ARGS="$ARGS --no-platforms"
-                [ "$VERBOSE" = true ] && ARGS="$ARGS --verbose"
-                exec "$(dirname "$0")/install.sh" $ARGS "$@"
-            else
-                echo "Error: No suitable installer found for this platform"
-                exit 1
-            fi
-            ;;
-        windows)
-            if command -v powershell &> /dev/null; then
-                echo "Using PowerShell installer..."
-                ARGS=""
-                [ "$SKIP_DEPS" = true ] && ARGS="$ARGS -SkipDeps"
-                [ "$NO_PLATFORMS" = true ] && ARGS="$ARGS -NoPlatforms"
-                [ "$VERBOSE" = true ] && ARGS="$ARGS -Verbose"
-                powershell -ExecutionPolicy Bypass -File "$(dirname "$0")/install.ps1" $ARGS "$@"
-            else
-                echo "Error: PowerShell not found"
-                exit 1
-            fi
-            ;;
-        *)
-            echo "Error: Unknown platform: $PLATFORM"
-            exit 1
-            ;;
-    esac
+    # Perform installation
+    install_toolkit
 }
 
-main "$@"
+# Run main function
+main

@@ -180,22 +180,40 @@ On `session.idle`:
 
 ## Unified Installers
 
-### MCP Stack Installer (`install-mcp-stack.sh`)
+### Unified Token Installer (`unified-token-installer.sh`)
 
-Interactive installer for the complete MCP/token optimization stack.
+**NEW:** Single unified installer that combines all token optimization functionality.
 
 **Usage:**
 ```bash
-bash install-mcp-stack.sh          # Full interactive installation
-bash install-mcp-stack.sh --minimal # Core stack only
-bash install-mcp-stack.sh --dry-run # Preview without applying
+# Auto mode (default) - non-interactive full installation
+bash unified-token-installer.sh
+
+# Interactive mode - menu-driven component selection
+bash unified-token-installer.sh --interactive
+
+# Minimal mode - core stack only
+bash unified-token-installer.sh --minimal
+
+# Stack selection
+bash unified-token-installer.sh --stack-a  # Daily coding (lean & fast)
+bash unified-token-installer.sh --stack-b  # Full memory + compression (default)
+
+# Dry-run preview
+bash unified-token-installer.sh --dry-run
 ```
 
 **Components:**
-- **Core Stack:** DCP, Skills Framework, Conductor, LCM
+- **Core Stack:** DCP, Skills Framework, Conductor, LCM, context-mode
 - **MCP Servers:** code-review-graph
 - **Tools:** RTK, graphify
 - **Configuration:** AGENTS.md, Auto-init, DCP thresholds
+- **Stack B Only:** memsearch (cross-project semantic recall)
+
+**Legacy Wrappers:**
+- `setup-token-optimizer.sh` → delegates to unified installer
+- `install-mcp-stack.sh` → delegates to unified installer
+- `setup-global-token-rules.sh` → delegates to unified installer
 
 ### Script Manager (`scripts-manager.sh`)
 
@@ -208,9 +226,9 @@ bash scripts-manager.sh --dry-run  # Preview mode
 ```
 
 **Categories:**
-1. **Installation** — install.sh, install.ps1, install.py
+1. **Installation** — install-universal.sh, unified-token-installer.sh
 2. **Utilities** — backup-restore-ai-configs.sh, run-benchmark.sh
-3. **Setup** — maintain-stack.sh, setup-global-token-rules.sh
-4. **MCP Stack** — launch install-mcp-stack.sh
+3. **Setup** — maintain-stack.sh
+4. **MCP Stack** — launch unified-token-installer.sh
 5. **Custom Script** — browse and run any script
 6. **Help** — documentation and script info

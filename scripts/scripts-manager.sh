@@ -46,7 +46,7 @@ discover_scripts() {
   
   case "$category" in
     installation)
-      for script in install.sh install.ps1 install.py install-universal.sh; do
+      for script in install-universal.sh; do
         [[ -f "$SCRIPT_DIR/$script" ]] && scripts+=("$script")
       done
       ;;
@@ -56,12 +56,12 @@ discover_scripts() {
       done
       ;;
     setup)
-      for script in maintain-stack.sh setup-global-token-rules.sh setup-token-optimizer.sh; do
+      for script in maintain-stack.sh unified-token-installer.sh; do
         [[ -f "$SCRIPT_DIR/$script" ]] && scripts+=("$script")
       done
       ;;
     mcp)
-      [[ -f "$SCRIPT_DIR/install-mcp-stack.sh" ]] && scripts+=("install-mcp-stack.sh")
+      [[ -f "$SCRIPT_DIR/unified-token-installer.sh" ]] && scripts+=("unified-token-installer.sh")
       ;;
   esac
   

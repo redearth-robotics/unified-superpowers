@@ -29,8 +29,8 @@ The installer auto-deploys skills to 7 AI coding platforms: .claude, .opencode, 
 
 Or use the new interactive installers:
 ```bash
-# MCP stack installer (DCP, skills framework, MCP servers)
-bash scripts/install-mcp-stack.sh
+# Unified token installer (DCP, skills framework, MCP servers, tools)
+bash scripts/unified-token-installer.sh
 
 # Script manager (browse and run all scripts)
 bash scripts/scripts-manager.sh
@@ -121,17 +121,8 @@ Skills auto-trigger based on what you ask. No manual loading, no configuration f
 All scripts support `-d` (custom directory), `-y` (automated), `--skip-deps`, `--no-platforms`, `-v` (verbose).
 
 ```bash
-# Universal (auto-detects platform)
-./scripts/install-universal.sh
-
-# Linux/macOS
-./scripts/install.sh -d ~/skills --yes
-
-# Cross-platform Python
-python3 scripts/install.py
-
-# Windows
-.\scripts\install.ps1 -NoPlatforms
+# Universal (cross-platform)
+./scripts/install-universal.sh -d ~/skills --yes
 ```
 
 ### MCP Stack & Tooling
@@ -139,10 +130,11 @@ python3 scripts/install.py
 Interactive installers with menus, dry-run support, and component selection:
 
 ```bash
-# MCP stack installer — DCP, skills framework, MCP servers, tools
-bash scripts/install-mcp-stack.sh          # Full interactive mode
-bash scripts/install-mcp-stack.sh --minimal # Core stack only
-bash scripts/install-mcp-stack.sh --dry-run # Preview without installing
+# Unified token installer — DCP, skills framework, MCP servers, tools
+bash scripts/unified-token-installer.sh              # Full auto mode
+bash scripts/unified-token-installer.sh --interactive # Menu-driven selection
+bash scripts/unified-token-installer.sh --minimal     # Core stack only
+bash scripts/unified-token-installer.sh --dry-run     # Preview without installing
 
 # Script manager — browse and run all project scripts
 bash scripts/scripts-manager.sh            # Interactive menu
